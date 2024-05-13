@@ -1,23 +1,27 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckOnboardingStatusController extends GetxController {
-  //TODO: Implement CheckOnboardingStatusController
+  RxBool hasCompletedOnboarding = false.obs;
 
-  final count = 0.obs;
+  bool get hasCompletedOnboardingStatus => hasCompletedOnboarding.value;
+
   @override
   void onInit() {
     super.onInit();
+    checkOnboardingStatus();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> checkOnboardingStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    hasCompletedOnboarding.value =
+        prefs.getBool('onboarding_completed') ?? false;
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  //TODO: Making On Boarding completed remaining
+  Future<void> markOnboardingAsCompleted() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboarding_completed', true);
+    hasCompletedOnboarding.value = true;
   }
-
-  void increment() => count.value++;
 }

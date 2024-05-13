@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:taskwarrior/app/modules/home/views/home_view.dart';
+import 'package:taskwarrior/app/modules/onboarding/views/onboarding_view.dart';
 
 import '../controllers/check_onboarding_status_controller.dart';
 
 class CheckOnboardingStatusView
     extends GetView<CheckOnboardingStatusController> {
-  const CheckOnboardingStatusView({Key? key}) : super(key: key);
+  const CheckOnboardingStatusView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('CheckOnboardingStatusView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'CheckOnboardingStatusView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
+    return controller.hasCompletedOnboardingStatus
+        ? const HomeView()
+        : const OnboardingView();
   }
 }
