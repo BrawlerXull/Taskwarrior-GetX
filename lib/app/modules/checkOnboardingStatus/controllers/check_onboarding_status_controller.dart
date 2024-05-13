@@ -17,11 +17,4 @@ class CheckOnboardingStatusController extends GetxController {
     hasCompletedOnboarding.value =
         prefs.getBool('onboarding_completed') ?? false;
   }
-
-  //TODO: Making On Boarding completed remaining
-  Future<void> markOnboardingAsCompleted() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboarding_completed', true);
-    hasCompletedOnboarding.value = true;
-  }
 }

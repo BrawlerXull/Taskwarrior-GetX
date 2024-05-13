@@ -1,23 +1,15 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingController extends GetxController {
-  //TODO: Implement OnboardingController
+  RxInt currentPage = 0.obs;
+  int get getCurrentPage => currentPage.value;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void setCurrentPage(int newCurrentPage) => currentPage.value = newCurrentPage;
+  // Might cause issue
+  Future<void> markOnboardingAsCompleted() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboarding_completed', true);
+    update();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
