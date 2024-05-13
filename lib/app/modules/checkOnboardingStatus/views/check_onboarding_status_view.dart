@@ -11,8 +11,10 @@ class CheckOnboardingStatusView
   const CheckOnboardingStatusView({super.key});
   @override
   Widget build(BuildContext context) {
-    return controller.hasCompletedOnboardingStatus
-        ? const HomeView()
-        : const OnboardingView();
+    return Obx(
+      () => controller.hasCompletedOnboardingStatus
+          ? const HomeView()
+          : const OnboardingView(),
+    );
   }
 }
