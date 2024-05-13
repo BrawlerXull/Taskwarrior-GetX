@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/checkOnboardingStatus/bindings/check_onboarding_status_binding.dart';
+import '../modules/checkOnboardingStatus/views/check_onboarding_status_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
@@ -22,6 +24,11 @@ class AppPages {
       name: _Paths.ONBOARDING,
       page: () => const OnboardingView(),
       binding: OnboardingBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHECK_ONBOARDING_STATUS,
+      page: () => const CheckOnboardingStatusView(),
+      binding: CheckOnboardingStatusBinding(),
     ),
   ];
 }
