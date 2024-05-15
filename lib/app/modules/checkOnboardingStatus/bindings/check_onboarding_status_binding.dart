@@ -11,12 +11,12 @@ class CheckOnboardingStatusBinding extends Bindings {
       CheckOnboardingStatusController(),
     );
 
-    Get.lazyPut<OnboardingController>(
-      () => OnboardingController(),
+    Get.put<OnboardingController>(
+      OnboardingController(),
     );
 
-    Get.lazyPut(
-      () => HomeController(),
+    Get.put(
+      HomeController(),
     );
   }
 }

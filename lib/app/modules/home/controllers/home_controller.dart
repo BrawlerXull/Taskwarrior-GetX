@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, unrelated_type_equality_checks
 
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +12,15 @@ import 'package:taskwarrior/app/models/json/task.dart';
 import 'package:taskwarrior/app/models/storage.dart';
 import 'package:taskwarrior/app/models/storage/client.dart';
 import 'package:taskwarrior/app/models/tag_meta_data.dart';
+import 'package:taskwarrior/app/modules/splash/controllers/splash_controller.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/comparator.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/projects.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/query.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/tags.dart';
 
 class HomeController extends GetxController {
-  final Storage _storage = Get.arguments['profile'];
+  final SplashController splashController = Get.find<SplashController>();
+  late Storage _storage;
   final RxBool pendingFilter = false.obs;
   final RxBool waitingFilter = false.obs;
   final RxString projectFilter = ''.obs;
@@ -36,6 +39,11 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _storage = Storage(
+      Directory(
+        '${splashController.baseDirectory.value.path}/profiles/${splashController.currentProfile.value}',
+      ),
+    );
     serverCertExists = RxBool(_storage.guiPemFiles.serverCertExists());
     _profileSet();
   }

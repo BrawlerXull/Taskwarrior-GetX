@@ -13,10 +13,10 @@ class HomeView extends GetView<HomeController> {
         title: const Text('HomeView'),
         centerTitle: true,
       ),
-      body: const Center(
+      body:  Center(
         child: Text(
-          'HomeView is working',
-          style: TextStyle(fontSize: 20),
+          controller.pendingFilter.value.toString(),
+          style: const TextStyle(fontSize: 20),
         ),
       ),
     );
