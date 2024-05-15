@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:taskwarrior/app/models/data.dart';
 import 'package:taskwarrior/app/models/storage/tabs.dart';
-import 'package:taskwarrior/app/utils/impl/gui_pem_file_paths.dart';
-import 'package:taskwarrior/app/utils/impl/home.dart';
-import 'package:taskwarrior/app/utils/impl/taskrc.dart';
+import 'package:taskwarrior/app/utils/home_path/impl/gui_pem_file_paths.dart';
+import 'package:taskwarrior/app/utils/home_path/impl/home.dart';
+import 'package:taskwarrior/app/utils/home_path/impl/taskrc.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/query.dart';
 
 

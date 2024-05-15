@@ -7,6 +7,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:taskwarrior/app/models/json/task.dart';
 import 'package:taskwarrior/app/models/storage.dart';
@@ -20,7 +21,7 @@ import 'package:taskwarrior/app/utils/taskfunctions/tags.dart';
 
 class HomeController extends GetxController {
   final SplashController splashController = Get.find<SplashController>();
-  late Storage _storage;
+  late Storage storage;
   final RxBool pendingFilter = false.obs;
   final RxBool waitingFilter = false.obs;
   final RxString projectFilter = ''.obs;
@@ -39,22 +40,22 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _storage = Storage(
+    storage = Storage(
       Directory(
         '${splashController.baseDirectory.value.path}/profiles/${splashController.currentProfile.value}',
       ),
     );
-    serverCertExists = RxBool(_storage.guiPemFiles.serverCertExists());
+    serverCertExists = RxBool(storage.guiPemFiles.serverCertExists());
     _profileSet();
   }
 
   void _profileSet() {
-    pendingFilter.value = Query(_storage.tabs.tab()).getPendingFilter();
-    waitingFilter.value = Query(_storage.tabs.tab()).getWaitingFilter();
-    projectFilter.value = Query(_storage.tabs.tab()).projectFilter();
-    tagUnion.value = Query(_storage.tabs.tab()).tagUnion();
-    selectedSort.value = Query(_storage.tabs.tab()).getSelectedSort();
-    selectedTags.addAll(Query(_storage.tabs.tab()).getSelectedTags());
+    pendingFilter.value = Query(storage.tabs.tab()).getPendingFilter();
+    waitingFilter.value = Query(storage.tabs.tab()).getWaitingFilter();
+    projectFilter.value = Query(storage.tabs.tab()).projectFilter();
+    tagUnion.value = Query(storage.tabs.tab()).tagUnion();
+    selectedSort.value = Query(storage.tabs.tab()).getSelectedSort();
+    selectedTags.addAll(Query(storage.tabs.tab()).getSelectedTags());
 
     _refreshTasks();
     pendingTags.value = _pendingTags();
@@ -66,12 +67,12 @@ class HomeController extends GetxController {
 
   void _refreshTasks() {
     if (pendingFilter.value) {
-      queriedTasks.value = _storage.data
+      queriedTasks.value = storage.data
           .pendingData()
           .where((task) => task.status == 'pending')
           .toList();
     } else {
-      queriedTasks.value = _storage.data.completedData();
+      queriedTasks.value = storage.data.completedData();
     }
 
     if (waitingFilter.value) {
@@ -135,9 +136,9 @@ class HomeController extends GetxController {
   }
 
   Map<String, TagMetadata> _pendingTags() {
-    var frequency = tagFrequencies(_storage.data.pendingData());
-    var modified = tagsLastModified(_storage.data.pendingData());
-    var setOfTags = tagSet(_storage.data.pendingData());
+    var frequency = tagFrequencies(storage.data.pendingData());
+    var modified = tagsLastModified(storage.data.pendingData());
+    var setOfTags = tagSet(storage.data.pendingData());
 
     return SplayTreeMap.of({
       for (var tag in setOfTags)
@@ -151,7 +152,7 @@ class HomeController extends GetxController {
 
   Map<String, ProjectNode> _projects() {
     var frequencies = <String, int>{};
-    for (var task in _storage.data.pendingData()) {
+    for (var task in storage.data.pendingData()) {
       if (task.project != null) {
         if (frequencies.containsKey(task.project)) {
           frequencies[task.project!] = (frequencies[task.project] ?? 0) + 1;
@@ -164,32 +165,32 @@ class HomeController extends GetxController {
   }
 
   void togglePendingFilter() {
-    Query(_storage.tabs.tab()).togglePendingFilter();
-    pendingFilter.value = Query(_storage.tabs.tab()).getPendingFilter();
+    Query(storage.tabs.tab()).togglePendingFilter();
+    pendingFilter.value = Query(storage.tabs.tab()).getPendingFilter();
     _refreshTasks();
   }
 
   void toggleWaitingFilter() {
-    Query(_storage.tabs.tab()).toggleWaitingFilter();
-    waitingFilter.value = Query(_storage.tabs.tab()).getWaitingFilter();
+    Query(storage.tabs.tab()).toggleWaitingFilter();
+    waitingFilter.value = Query(storage.tabs.tab()).getWaitingFilter();
     _refreshTasks();
   }
 
   void toggleProjectFilter(String project) {
-    Query(_storage.tabs.tab()).toggleProjectFilter(project);
-    projectFilter.value = Query(_storage.tabs.tab()).projectFilter();
+    Query(storage.tabs.tab()).toggleProjectFilter(project);
+    projectFilter.value = Query(storage.tabs.tab()).projectFilter();
     _refreshTasks();
   }
 
   void toggleTagUnion() {
-    Query(_storage.tabs.tab()).toggleTagUnion();
-    tagUnion.value = Query(_storage.tabs.tab()).tagUnion();
+    Query(storage.tabs.tab()).toggleTagUnion();
+    tagUnion.value = Query(storage.tabs.tab()).tagUnion();
     _refreshTasks();
   }
 
   void selectSort(String sort) {
-    Query(_storage.tabs.tab()).setSelectedSort(sort);
-    selectedSort.value = Query(_storage.tabs.tab()).getSelectedSort();
+    Query(storage.tabs.tab()).setSelectedSort(sort);
+    selectedSort.value = Query(storage.tabs.tab()).getSelectedSort();
     _refreshTasks();
   }
 
@@ -203,17 +204,17 @@ class HomeController extends GetxController {
     } else {
       selectedTags.add('+$tag');
     }
-    Query(_storage.tabs.tab()).toggleTagFilter(tag);
-    selectedTags.addAll(Query(_storage.tabs.tab()).getSelectedTags());
+    Query(storage.tabs.tab()).toggleTagFilter(tag);
+    selectedTags.addAll(Query(storage.tabs.tab()).getSelectedTags());
     _refreshTasks();
   }
 
   Task getTask(String uuid) {
-    return _storage.data.getTask(uuid);
+    return storage.data.getTask(uuid);
   }
 
   void mergeTask(Task task) {
-    _storage.data.mergeTask(task);
+    storage.data.mergeTask(task);
 
     _refreshTasks();
   }
@@ -276,7 +277,7 @@ class HomeController extends GetxController {
           );
         }
 
-        var header = await _storage.home.synchronize(await client());
+        var header = await storage.home.synchronize(await client());
         _refreshTasks();
         pendingTags.value = _pendingTags();
         projects.value = _projects();
@@ -331,33 +332,33 @@ class HomeController extends GetxController {
   }
 
   void setInitialTabIndex(int index) {
-    _storage.tabs.setInitialTabIndex(index);
-    pendingFilter.value = Query(_storage.tabs.tab()).getPendingFilter();
-    waitingFilter.value = Query(_storage.tabs.tab()).getWaitingFilter();
-    selectedSort.value = Query(_storage.tabs.tab()).getSelectedSort();
-    selectedTags.addAll(Query(_storage.tabs.tab()).getSelectedTags());
-    projectFilter.value = Query(_storage.tabs.tab()).projectFilter();
+    storage.tabs.setInitialTabIndex(index);
+    pendingFilter.value = Query(storage.tabs.tab()).getPendingFilter();
+    waitingFilter.value = Query(storage.tabs.tab()).getWaitingFilter();
+    selectedSort.value = Query(storage.tabs.tab()).getSelectedSort();
+    selectedTags.addAll(Query(storage.tabs.tab()).getSelectedTags());
+    projectFilter.value = Query(storage.tabs.tab()).projectFilter();
     _refreshTasks();
   }
 
   void addTab() {
-    _storage.tabs.addTab();
+    storage.tabs.addTab();
   }
 
   List<String> tabUuids() {
-    return _storage.tabs.tabUuids();
+    return storage.tabs.tabUuids();
   }
 
   int initialTabIndex() {
-    return _storage.tabs.initialTabIndex();
+    return storage.tabs.initialTabIndex();
   }
 
   void removeTab(int index) {
-    _storage.tabs.removeTab(index);
-    pendingFilter.value = Query(_storage.tabs.tab()).getPendingFilter();
-    waitingFilter.value = Query(_storage.tabs.tab()).getWaitingFilter();
-    selectedSort.value = Query(_storage.tabs.tab()).getSelectedSort();
-    selectedTags.addAll(Query(_storage.tabs.tab()).getSelectedTags());
+    storage.tabs.removeTab(index);
+    pendingFilter.value = Query(storage.tabs.tab()).getPendingFilter();
+    waitingFilter.value = Query(storage.tabs.tab()).getWaitingFilter();
+    selectedSort.value = Query(storage.tabs.tab()).getSelectedSort();
+    selectedTags.addAll(Query(storage.tabs.tab()).getSelectedTags());
     _refreshTasks();
   }
 
@@ -365,10 +366,30 @@ class HomeController extends GetxController {
     required String tab,
     required String name,
   }) {
-    _storage.tabs.renameTab(tab: tab, name: name);
+    storage.tabs.renameTab(tab: tab, name: name);
   }
 
   String? tabAlias(String tabUuid) {
-    return _storage.tabs.alias(tabUuid);
+    return storage.tabs.alias(tabUuid);
+  }
+
+  RxBool isSyncNeeded = false.obs;
+
+  void checkForSync(BuildContext context){
+    if (!isSyncNeeded.value) {
+      isNeededtoSyncOnStart(context);
+      isSyncNeeded.value = true;
+    }
+  }
+
+  isNeededtoSyncOnStart(BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? value;
+    value = prefs.getBool('sync-onStart') ?? false;
+
+    if (value) {
+
+      synchronize(context, false);
+    } else {}
   }
 }

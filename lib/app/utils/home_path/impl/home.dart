@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:taskwarrior/app/models/data.dart';
 import 'package:taskwarrior/app/models/storage/exceptions/bad_certificate_exception.dart';
-import 'package:taskwarrior/app/utils/impl/taskd_client.dart';
+import 'package:taskwarrior/app/utils/home_path/impl/taskd_client.dart';
 import 'package:taskwarrior/app/utils/taskserver/taskserver.dart' as rc;
 
 class Home {
