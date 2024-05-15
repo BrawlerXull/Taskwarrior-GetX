@@ -4,9 +4,11 @@ import '../modules/checkOnboardingStatus/bindings/check_onboarding_status_bindin
 import '../modules/checkOnboardingStatus/views/check_onboarding_status_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/manageTaskServer/bindings/manage_task_server_binding.dart';
+import '../modules/manageTaskServer/views/manage_task_server_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
- import '../modules/splash/bindings/splash_binding.dart';
+import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
 part 'app_routes.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANAGE_TASK_SERVER,
+      page: () => const ManageTaskServerView(),
+      binding: ManageTaskServerBinding(),
     ),
   ];
 }

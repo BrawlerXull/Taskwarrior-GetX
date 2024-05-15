@@ -7,6 +7,7 @@ abstract class Routes {
   static const ONBOARDING = _Paths.ONBOARDING;
   static const CHECK_ONBOARDING_STATUS = _Paths.CHECK_ONBOARDING_STATUS;
   static const SPLASH = _Paths.SPLASH;
+  static const MANAGE_TASK_SERVER = _Paths.MANAGE_TASK_SERVER;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const ONBOARDING = '/onboarding';
   static const CHECK_ONBOARDING_STATUS = '/check-onboarding-status';
   static const SPLASH = '/splash';
+  static const MANAGE_TASK_SERVER = '/manage-task-server';
 }
