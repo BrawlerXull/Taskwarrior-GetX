@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -471,7 +471,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                         )
                                       : Text(
                                           '${controller.server}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               // color: AppSettings.isDarkMode
                                               //     ? TaskWarriorColors.white
                                               //     : TaskWarriorColors.black,
@@ -480,7 +480,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                   Container(
                                     height: 30,
                                     width: 30,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       // color: AppSettings.isDarkMode
                                       //     ? TaskWarriorColors
                                       //         .kLightSecondaryBackgroundColor
@@ -494,7 +494,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                               Icons.check,
                                               color: TaskWarriorColors.green,
                                             )
-                                          : Icon(
+                                          : const Icon(
                                               Icons.chevron_right_rounded,
                                               // color: AppSettings.isDarkMode
                                               //     ? TaskWarriorColors.black
@@ -518,7 +518,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "TaskD Server Credentials",
                             style: TextStyle(
                                 // color: AppSettings.isDarkMode
@@ -544,7 +544,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   controller.credentialsString == null
-                                      ? Text(
+                                      ? const Text(
                                           'Not Configured',
                                           style: TextStyle(
                                               // color: AppSettings.isDarkMode
@@ -561,7 +561,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                             scrollDirection: Axis.horizontal,
                                             child: Text(
                                               credentialsString,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   // color: AppSettings.isDarkMode
                                                   //     ? TaskWarriorColors.white
                                                   //     : TaskWarriorColors.black,
@@ -576,7 +576,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                     child: Container(
                                       height: 30,
                                       width: 30,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         // color: AppSettings.isDarkMode
                                         //     ? TaskWarriorColors
                                         //         .kLightPrimaryBackgroundColor
@@ -585,7 +585,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                         shape: BoxShape.circle,
                                       ),
                                       child:controller.credentials == null
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.chevron_right_rounded,
                                               // color: AppSettings.isDarkMode
                                               //     ? TaskWarriorColors.black
