@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -379,15 +378,17 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            controller.taskrcContentController.text.isEmpty
-                                ? "Set TaskRc"
-                                : "Taskrc file is verified",
-                            style: const TextStyle(
-                                // color: AppSettings.isDarkMode
-                                //     ? TaskWarriorColors.white
-                                //     : TaskWarriorColors.black,
-                                ),
+                          Obx(
+                            () => Text(
+                              controller.taskrcContentController.text.isEmpty
+                                  ? "Set TaskRc"
+                                  : "Taskrc file is verified",
+                              style: const TextStyle(
+                                  // color: AppSettings.isDarkMode
+                                  //     ? TaskWarriorColors.white
+                                  //     : TaskWarriorColors.black,
+                                  ),
+                            ),
                           ),
                           Container(
                             height: 30,
@@ -571,7 +572,8 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                         ),
                                   GestureDetector(
                                     onTap: () {
-                                      controller.hideKey.value = !controller.hideKey.value;
+                                      controller.hideKey.value =
+                                          !controller.hideKey.value;
                                     },
                                     child: Container(
                                       height: 30,
@@ -584,7 +586,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                         //         .kprimaryBackgroundColor,
                                         shape: BoxShape.circle,
                                       ),
-                                      child:controller.credentials == null
+                                      child: controller.credentials == null
                                           ? const Icon(
                                               Icons.chevron_right_rounded,
                                               // color: AppSettings.isDarkMode

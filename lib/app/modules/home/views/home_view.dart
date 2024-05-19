@@ -2,6 +2,8 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:taskwarrior/app/models/filters.dart';
+import 'package:taskwarrior/app/modules/home/views/filter_drawer_home_page.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
 import 'package:taskwarrior/app/utils/taskserver/taskserver.dart';
@@ -29,6 +31,46 @@ class HomeView extends GetView<HomeController> {
     }
 
     controller.checkForSync(context);
+
+
+    var taskData = controller.searchedTasks;
+
+    var pendingFilter = controller.pendingFilter;
+    var waitingFilter = controller.waitingFilter;
+    var pendingTags = controller.pendingTags;
+
+    var selectedTagsMap = {
+      for (var tag in controller.selectedTags) tag.substring(1): tag,
+    };
+
+    var keys = (pendingTags.keys.toSet()..addAll(selectedTagsMap.keys)).toList()
+      ..sort();
+
+    var tags = {
+      for (var tag in keys)
+        tag: TagFilterMetadata(
+          display:
+              '${selectedTagsMap[tag] ?? tag} ${pendingTags[tag]?.frequency ?? 0}',
+          selected: selectedTagsMap.containsKey(tag),
+        ),
+    };
+
+    var tagFilters = TagFilters(
+      tagUnion: controller.tagUnion,
+      toggleTagUnion: controller.toggleTagUnion,
+      tags: tags,
+      toggleTagFilter: controller.toggleTagFilter,
+    );
+    var filters = Filters(
+      pendingFilter:controller.pendingFilter.value,
+      waitingFilter: controller.waitingFilter.value,
+      togglePendingFilter: controller.togglePendingFilter,
+      toggleWaitingFilter: controller.toggleWaitingFilter,
+      projects: controller.projects,
+      projectFilter: controller.projectFilter.value,
+      toggleProjectFilter: controller.toggleProjectFilter,
+      tagFilters: tagFilters,
+    );
 
     return isHomeWidgetTaskTapped == false
         ? Scaffold(
@@ -208,7 +250,7 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
             ),
-            endDrawer: FilterDrawer(filters),
+            endDrawer: FilterDrawer(filters:filters , homeController: controller,),
             floatingActionButton: FloatingActionButton(
                 heroTag: "btn3",
                 // backgroundColor: AppSettings.isDarkMode
