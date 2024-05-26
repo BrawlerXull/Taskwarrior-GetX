@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:taskwarrior/app/models/models.dart';
+import 'package:taskwarrior/app/modules/detailRoute/views/detail_route_view.dart';
 import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
 import 'package:taskwarrior/app/services/notification_services.dart';
 import 'package:taskwarrior/app/utils/constants/palette.dart';
@@ -188,13 +189,13 @@ class TasksBuilder extends StatelessWidget {
                           ],
                         ),
                         child: Card(
-                          // color: AppSettings.isDarkMode
-                          //     ? Palette.kToDark
-                          //     : TaskWarriorColors.white,
+                          color: AppSettings.isDarkMode
+                              ? Palette.kToDark
+                              : TaskWarriorColors.white,
                           child: InkWell(
-                            // splashColor: AppSettings.isDarkMode
-                            //     ? TaskWarriorColors.black
-                            //     : TaskWarriorColors.borderColor,
+                            splashColor: AppSettings.isDarkMode
+                                ? TaskWarriorColors.black
+                                : TaskWarriorColors.borderColor,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -220,7 +221,7 @@ class TasksBuilder extends StatelessWidget {
                           onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetailRoute(task.uuid),
+                              builder: (context) => DetailRouteView(task.uuid),
                             ),
                           ),
                           child: TaskListItem(

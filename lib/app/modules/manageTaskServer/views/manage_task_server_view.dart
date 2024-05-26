@@ -8,6 +8,7 @@ import 'package:loggy/loggy.dart';
 import 'package:taskwarrior/app/models/storage/client.dart';
 import 'package:taskwarrior/app/models/storage/set_config.dart';
 import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
+import 'package:taskwarrior/app/modules/manageTaskServer/views/pem_widget.dart';
 import 'package:taskwarrior/app/utils/constants/constants.dart';
 import 'package:taskwarrior/app/utils/constants/utilites.dart';
 import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
@@ -561,7 +562,8 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                                           child: SingleChildScrollView(
                                             scrollDirection: Axis.horizontal,
                                             child: Text(
-                                              credentialsString,
+                                              controller
+                                                  .credentialsString!.value,
                                               style: const TextStyle(
                                                   // color: AppSettings.isDarkMode
                                                   //     ? TaskWarriorColors.white
@@ -619,7 +621,7 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
               if (homeController.serverCertExists.value) 'server.cert',
             ])
               PemWidget(
-                storage: storage,
+                storage: controller.storage,
                 pem: pem,
                 optionString: pem == "taskd.certificate"
                     ? "Configure your certificate"
@@ -635,6 +637,8 @@ class ManageTaskServerView extends GetView<ManageTaskServerController> {
                         : pem == "taskd.ca"
                             ? "Select Certificate"
                             : "Select Certificate",
+                onTapCallBack: controller.onTapPEMWidget,
+                onLongPressCallBack: controller.onLongPressPEMWidget,
               ),
           ],
         ),
