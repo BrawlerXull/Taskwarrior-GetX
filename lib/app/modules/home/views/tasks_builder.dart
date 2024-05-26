@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:taskwarrior/app/models/models.dart';
 import 'package:taskwarrior/app/modules/detailRoute/views/detail_route_view.dart';
 import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
+import 'package:taskwarrior/app/routes/app_pages.dart';
 import 'package:taskwarrior/app/services/notification_services.dart';
 import 'package:taskwarrior/app/utils/constants/palette.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
@@ -196,12 +197,16 @@ class TasksBuilder extends StatelessWidget {
                             splashColor: AppSettings.isDarkMode
                                 ? TaskWarriorColors.black
                                 : TaskWarriorColors.borderColor,
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailRoute(task.uuid),
-                              ),
-                            ),
+                            onTap: () {
+                              Get.toNamed(Routes.DETAIL_ROUTE,
+                                  arguments: ["uuid", task.uuid]);
+                            },
+                            // onTap: () => Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => DetailRouteView(task.uuid),
+                            //   ),
+                            // ),
                             child: TaskListItem(
                               task,
                               pendingFilter: pendingFilter,
@@ -218,12 +223,10 @@ class TasksBuilder extends StatelessWidget {
                           splashColor: AppSettings.isDarkMode
                               ? TaskWarriorColors.black
                               : TaskWarriorColors.borderColor,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailRouteView(task.uuid),
-                            ),
-                          ),
+                          onTap: () {
+                            Get.toNamed(Routes.DETAIL_ROUTE,
+                                arguments: ["uuid", task.uuid]);
+                          },
                           child: TaskListItem(
                             task,
                             pendingFilter: pendingFilter,

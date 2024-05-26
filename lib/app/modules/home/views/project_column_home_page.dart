@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
+import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
+import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/projects.dart';
+import 'package:taskwarrior/app/utils/theme/app_settings.dart';
 
 class ProjectsColumn extends StatelessWidget {
   const ProjectsColumn({
@@ -51,6 +55,13 @@ class ProjectsColumn extends StatelessWidget {
                         //       ? TaskWarriorColors.white
                         //       : TaskWarriorColors.black,
                         // ),
+                        style: TextStyle(
+                          fontFamily: FontFamily.poppins,
+                          fontSize: TaskWarriorFonts.fontSizeSmall,
+                          color: AppSettings.isDarkMode
+                              ? TaskWarriorColors.white
+                              : TaskWarriorColors.black,
+                        ),
                       ),
                     ],
                   ),
@@ -59,21 +70,26 @@ class ProjectsColumn extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                "All Projects",
-                // style: GoogleFonts.poppins(
-                //   fontWeight: TaskWarriorFonts.semiBold,
-                //   fontSize: TaskWarriorFonts.fontSizeSmall,
-                //   color: AppSettings.isDarkMode
-                //       ? TaskWarriorColors.white
-                //       : TaskWarriorColors.black,
-                // ),
-              ),
+              Text("All Projects",
+                  // style: GoogleFonts.poppins(
+                  //   fontWeight: TaskWarriorFonts.semiBold,
+                  //   fontSize: TaskWarriorFonts.fontSizeSmall,
+                  //   color: AppSettings.isDarkMode
+                  //       ? TaskWarriorColors.white
+                  //       : TaskWarriorColors.black,
+                  // ),
+                  style: TextStyle(
+                    fontFamily: FontFamily.poppins,
+                    fontSize: TaskWarriorFonts.fontSizeSmall,
+                    color: AppSettings.isDarkMode
+                        ? TaskWarriorColors.white
+                        : TaskWarriorColors.black,
+                  )),
             ],
           ),
         ),
@@ -89,7 +105,7 @@ class ProjectsColumn extends StatelessWidget {
         else
           Column(
             children: [
-              const Text(
+              Text(
                 "No Projects Found",
                 // style: GoogleFonts.poppins(
                 //   color: AppSettings.isDarkMode
@@ -97,6 +113,14 @@ class ProjectsColumn extends StatelessWidget {
                 //       : TaskWarriorColors.black,
                 //   fontSize: TaskWarriorFonts.fontSizeSmall,
                 // ),
+
+                style: TextStyle(
+                  fontFamily: FontFamily.poppins,
+                  fontSize: TaskWarriorFonts.fontSizeSmall,
+                  color: AppSettings.isDarkMode
+                      ? TaskWarriorColors.white
+                      : TaskWarriorColors.black,
+                ),
               ),
               SizedBox(
                 height: 2.h,
@@ -193,10 +217,10 @@ class ProjectTile extends StatelessWidget {
                         : '(${node.tasks}) ${node.subtasks}',
                     maxLines: 1,
                     style: GoogleFonts.poppins(
-                      // color: AppSettings.isDarkMode
-                      //     ? TaskWarriorColors.black
-                      //     : TaskWarriorColors.white,
-                    ),
+                        // color: AppSettings.isDarkMode
+                        //     ? TaskWarriorColors.black
+                        //     : TaskWarriorColors.white,
+                        ),
                   ),
                 ),
               ],

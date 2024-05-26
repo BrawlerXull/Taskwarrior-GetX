@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:loggy/loggy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -375,7 +376,7 @@ class HomeController extends GetxController {
 
   RxBool isSyncNeeded = false.obs;
 
-  void checkForSync(BuildContext context){
+  void checkForSync(BuildContext context) {
     if (!isSyncNeeded.value) {
       isNeededtoSyncOnStart(context);
       isSyncNeeded.value = true;
@@ -388,8 +389,12 @@ class HomeController extends GetxController {
     value = prefs.getBool('sync-onStart') ?? false;
 
     if (value) {
-
       synchronize(context, false);
     } else {}
   }
+
+  RxBool syncOnStart = false.obs;
+  RxBool syncOnTaskCreate = false.obs;
+  RxBool delaytask = false.obs;
+  RxBool change24hr = false.obs;
 }

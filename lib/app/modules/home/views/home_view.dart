@@ -297,6 +297,6 @@ class HomeView extends GetView<HomeController> {
                 ),
             resizeToAvoidBottomInset: false,
           )
-        : DetailRouteView();
+        : const DetailRouteView();
   }
 }
