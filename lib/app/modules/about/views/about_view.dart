@@ -8,20 +8,13 @@ import 'package:taskwarrior/app/utils/gen/assets.gen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/about_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
-import 'package:taskwarrior/app/modules/home/views/theme_clipper.dart';
-import 'package:taskwarrior/app/modules/profile/views/profile_view.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
-import 'package:taskwarrior/app/utils/constants/utilites.dart';
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
 
 class AboutView extends GetView<AboutController> {
-  const AboutView({Key? key}) : super(key: key);
+  const AboutView({super.key});
   @override
   Widget build(BuildContext context) {
     String introduction =

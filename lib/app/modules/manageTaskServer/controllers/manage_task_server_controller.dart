@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,6 @@ import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/home_path/home_path.dart' as rc;
 import 'package:taskwarrior/app/utils/taskserver/taskserver.dart';
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
-import 'package:pem/pem.dart';
 
 class ManageTaskServerController extends GetxController {
   final HomeController homeController = Get.find<HomeController>();
@@ -114,7 +112,7 @@ class ManageTaskServerController extends GetxController {
               backgroundColor: AppSettings.isDarkMode
                   ? TaskWarriorColors.ksecondaryBackgroundColor
                   : TaskWarriorColors.kLightSecondaryBackgroundColor,
-              duration: Duration(seconds: 2)));
+              duration: const Duration(seconds: 2)));
         } else {
           Navigator.pop(context);
           // Handle the case when server or credentials are missing in the Taskrc object
@@ -130,7 +128,7 @@ class ManageTaskServerController extends GetxController {
               backgroundColor: AppSettings.isDarkMode
                   ? TaskWarriorColors.ksecondaryBackgroundColor
                   : TaskWarriorColors.kLightSecondaryBackgroundColor,
-              duration: Duration(seconds: 2)));
+              duration: const Duration(seconds: 2)));
         }
       } else {
         Navigator.pop(context);
@@ -148,7 +146,7 @@ class ManageTaskServerController extends GetxController {
             // backgroundColor: AppSettings.isDarkMode
             //     ? TaskWarriorColors.ksecondaryBackgroundColor
             //     : TaskWarriorColors.kLightSecondaryBackgroundColor,
-            duration: Duration(seconds: 2)));
+            duration: const Duration(seconds: 2)));
       }
     }
   }
