@@ -10,6 +10,7 @@ abstract class Routes {
   static const MANAGE_TASK_SERVER = _Paths.MANAGE_TASK_SERVER;
   static const DETAIL_ROUTE = _Paths.DETAIL_ROUTE;
   static const PROFILE = _Paths.PROFILE;
+  static const ABOUT = _Paths.ABOUT;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const MANAGE_TASK_SERVER = '/manage-task-server';
   static const DETAIL_ROUTE = '/detail-route';
   static const PROFILE = '/profile';
+  static const ABOUT = '/about';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:taskwarrior/app/modules/about/views/about_view.dart';
 import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
 import 'package:taskwarrior/app/modules/home/views/theme_clipper.dart';
 import 'package:taskwarrior/app/modules/profile/views/profile_view.dart';
@@ -106,7 +107,7 @@ class NavDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const AboutPage(),
+                    builder: (context) => const AboutView(),
                   ),
                 );
               },

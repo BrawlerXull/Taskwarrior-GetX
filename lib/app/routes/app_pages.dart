@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/about/bindings/about_binding.dart';
+import '../modules/about/views/about_view.dart';
 import '../modules/checkOnboardingStatus/bindings/check_onboarding_status_binding.dart';
 import '../modules/checkOnboardingStatus/views/check_onboarding_status_view.dart';
 import '../modules/detailRoute/bindings/detail_route_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.ABOUT,
+      page: () => const AboutView(),
+      binding: AboutBinding(),
     ),
   ];
 }

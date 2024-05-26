@@ -71,7 +71,7 @@ class ProjectsColumn extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -156,31 +156,31 @@ class ProjectTile extends StatelessWidget {
         Flexible(
           child: Text(
             project,
-            // style: GoogleFonts.poppins(
-            //     color: AppSettings.isDarkMode
-            //         ? TaskWarriorColors.white
-            //         : TaskWarriorColors.black),
+            style: GoogleFonts.poppins(
+                color: AppSettings.isDarkMode
+                    ? TaskWarriorColors.white
+                    : TaskWarriorColors.black),
           ),
         ),
         Text(
           (node.children.isEmpty)
               ? '${node.subtasks}'
               : '(${node.tasks}) ${node.subtasks}',
-          // style: GoogleFonts.poppins(
-          //     color: AppSettings.isDarkMode
-          //         ? TaskWarriorColors.white
-          //         : TaskWarriorColors.black),
+          style: GoogleFonts.poppins(
+              color: AppSettings.isDarkMode
+                  ? TaskWarriorColors.white
+                  : TaskWarriorColors.black),
         )
       ],
     );
 
     var radio = Radio(
-      // activeColor: AppSettings.isDarkMode
-      //     ? TaskWarriorColors.white
-      //     : TaskWarriorColors.ksecondaryBackgroundColor,
-      // focusColor: AppSettings.isDarkMode
-      //     ? TaskWarriorColors.white
-      //     : TaskWarriorColors.ksecondaryBackgroundColor,
+      activeColor: AppSettings.isDarkMode
+          ? TaskWarriorColors.white
+          : TaskWarriorColors.ksecondaryBackgroundColor,
+      focusColor: AppSettings.isDarkMode
+          ? TaskWarriorColors.white
+          : TaskWarriorColors.ksecondaryBackgroundColor,
       toggleable: true,
       value: project,
       groupValue: projectFilter,
@@ -217,9 +217,9 @@ class ProjectTile extends StatelessWidget {
                         : '(${node.tasks}) ${node.subtasks}',
                     maxLines: 1,
                     style: GoogleFonts.poppins(
-                        // color: AppSettings.isDarkMode
-                        //     ? TaskWarriorColors.black
-                        //     : TaskWarriorColors.white,
+                        color: AppSettings.isDarkMode
+                            ? TaskWarriorColors.black
+                            : TaskWarriorColors.white,
                         ),
                   ),
                 ),
@@ -231,12 +231,12 @@ class ProjectTile extends StatelessWidget {
             key: PageStorageKey(project),
             leading: radio,
             title: title,
-            // backgroundColor: AppSettings.isDarkMode
-            //     ? TaskWarriorColors.ksecondaryBackgroundColor
-            //     : TaskWarriorColors.ksecondaryBackgroundColor,
-            // textColor: AppSettings.isDarkMode
-            //     ? TaskWarriorColors.white
-            //     : TaskWarriorColors.ksecondaryBackgroundColor,
+            backgroundColor: AppSettings.isDarkMode
+                ? TaskWarriorColors.ksecondaryBackgroundColor
+                : TaskWarriorColors.ksecondaryBackgroundColor,
+            textColor: AppSettings.isDarkMode
+                ? TaskWarriorColors.white
+                : TaskWarriorColors.ksecondaryBackgroundColor,
             children: node.children
                 .map((childProject) => ProjectTile(
                       project: childProject,
