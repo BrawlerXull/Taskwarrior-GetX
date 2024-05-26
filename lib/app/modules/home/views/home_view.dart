@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:taskwarrior/app/models/filters.dart';
+import 'package:taskwarrior/app/modules/detailRoute/views/detail_route_view.dart';
+
 import 'package:taskwarrior/app/modules/home/views/filter_drawer_home_page.dart';
+import 'package:taskwarrior/app/modules/home/views/tasks_builder.dart';
+import 'package:taskwarrior/app/modules/manageTaskServer/views/manage_task_server_view.dart';
+import 'package:taskwarrior/app/services/tag_filter.dart';
+import 'package:taskwarrior/app/utils/constants/palette.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
 import 'package:taskwarrior/app/utils/taskserver/taskserver.dart';
 import 'package:taskwarrior/app/utils/home_path/home_path.dart' as rc;
+import 'package:taskwarrior/app/utils/theme/app_settings.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -56,7 +63,7 @@ class HomeView extends GetView<HomeController> {
     };
 
     var tagFilters = TagFilters(
-      tagUnion: controller.tagUnion,
+      tagUnion: controller.tagUnion.value,
       toggleTagUnion: controller.toggleTagUnion,
       tags: tags,
       toggleTagFilter: controller.toggleTagFilter,
@@ -123,7 +130,7 @@ class HomeView extends GetView<HomeController> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (_) =>
-                                            const ManageTaskServer(),
+                                            const ManageTaskServerView(),
                                       )).then((value) {
                                     // setState(() {});
                                   });
@@ -164,9 +171,9 @@ class HomeView extends GetView<HomeController> {
               snackBar: const SnackBar(content: Text('Tap back again to exit')),
               // ignore: avoid_unnecessary_containers
               child: Container(
-                // color: AppSettings.isDarkMode
-                //     ? Palette.kToDark.shade200
-                //     : TaskWarriorColors.white,
+                color: AppSettings.isDarkMode
+                    ? Palette.kToDark.shade200
+                    : TaskWarriorColors.white,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                   child: Obx(
@@ -239,9 +246,9 @@ class HomeView extends GetView<HomeController> {
                             child: TasksBuilder(
                                 // darkmode: AppSettings.isDarkMode,
                                 taskData: taskData,
-                                pendingFilter: pendingFilter,
-                                waitingFilter: waitingFilter,
-                                searchVisible: controller.searchVisible),
+                                pendingFilter: pendingFilter.value,
+                                waitingFilter: waitingFilter.value,
+                                searchVisible: controller.searchVisible.value),
                           ),
                         ),
                       ],
@@ -253,16 +260,16 @@ class HomeView extends GetView<HomeController> {
             endDrawer: FilterDrawer(filters:filters , homeController: controller,),
             floatingActionButton: FloatingActionButton(
                 heroTag: "btn3",
-                // backgroundColor: AppSettings.isDarkMode
-                //     ? TaskWarriorColors.kLightPrimaryBackgroundColor
-                //     : TaskWarriorColors.kprimaryBackgroundColor,
-                child: const Tooltip(
+                backgroundColor: AppSettings.isDarkMode
+                    ? TaskWarriorColors.kLightPrimaryBackgroundColor
+                    : TaskWarriorColors.kprimaryBackgroundColor,
+                child:  Tooltip(
                   message: 'Add Task',
                   child: Icon(
                     Icons.add,
-                    // color: AppSettings.isDarkMode
-                    //     ? TaskWarriorColors.kprimaryBackgroundColor
-                    //     : TaskWarriorColors.white,
+                    color: AppSettings.isDarkMode
+                        ? TaskWarriorColors.kprimaryBackgroundColor
+                        : TaskWarriorColors.white,
                   ),
                 ),
                 onPressed: () => showDialog(
@@ -290,6 +297,6 @@ class HomeView extends GetView<HomeController> {
                 ),
             resizeToAvoidBottomInset: false,
           )
-        : DetailRoute(uuid);
+        : DetailRouteView();
   }
 }

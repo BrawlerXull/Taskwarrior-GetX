@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/checkOnboardingStatus/bindings/check_onboarding_status_binding.dart';
 import '../modules/checkOnboardingStatus/views/check_onboarding_status_view.dart';
+import '../modules/detailRoute/bindings/detail_route_binding.dart';
+import '../modules/detailRoute/views/detail_route_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/manageTaskServer/bindings/manage_task_server_binding.dart';
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.MANAGE_TASK_SERVER,
       page: () => const ManageTaskServerView(),
       binding: ManageTaskServerBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_ROUTE,
+      page: () => const DetailRouteView(),
+      binding: DetailRouteBinding(),
     ),
   ];
 }
