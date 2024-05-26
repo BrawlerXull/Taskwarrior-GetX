@@ -10,6 +10,8 @@ import '../modules/manageTaskServer/bindings/manage_task_server_binding.dart';
 import '../modules/manageTaskServer/views/manage_task_server_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.DETAIL_ROUTE,
       page: () => const DetailRouteView(),
       binding: DetailRouteBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

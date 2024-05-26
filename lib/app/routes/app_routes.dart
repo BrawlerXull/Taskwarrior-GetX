@@ -9,6 +9,7 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const MANAGE_TASK_SERVER = _Paths.MANAGE_TASK_SERVER;
   static const DETAIL_ROUTE = _Paths.DETAIL_ROUTE;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const MANAGE_TASK_SERVER = '/manage-task-server';
   static const DETAIL_ROUTE = '/detail-route';
+  static const PROFILE = '/profile';
 }
