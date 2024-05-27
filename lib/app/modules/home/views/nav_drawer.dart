@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:taskwarrior/app/modules/about/views/about_view.dart';
 import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
 import 'package:taskwarrior/app/modules/home/views/theme_clipper.dart';
-import 'package:taskwarrior/app/modules/profile/views/profile_view.dart';
+import 'package:taskwarrior/app/routes/app_pages.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
 import 'package:taskwarrior/app/utils/constants/utilites.dart';
@@ -82,11 +83,12 @@ class NavDrawer extends StatelessWidget {
               icon: Icons.person_rounded,
               text: 'Profile',
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileView(),
-                  ),
-                );
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => const ProfileView(),
+                //   ),
+                // );
+                Get.toNamed(Routes.PROFILE);
                 // Navigator.pushNamed(context, PageRoutes.profile);
               },
             ),
@@ -116,30 +118,33 @@ class NavDrawer extends StatelessWidget {
               icon: Icons.settings,
               text: 'Settings',
               onTap: () async {
-
                 ///check if auto sync is on or off
                 final SharedPreferences prefs =
                     await SharedPreferences.getInstance();
-                    homeController.syncOnStart.value = prefs.getBool('sync-onStart') ?? false;
-                  homeController.syncOnTaskCreate.value =
-                      prefs.getBool('sync-OnTaskCreate') ?? false;
-                  homeController.delaytask.value = prefs.getBool('delaytask') ?? false;
-                  homeController.change24hr.value = prefs.getBool('24hourformate') ?? false;
-                  // syncOnStart = prefs.getBool('sync-onStart') ?? false;
-                  // syncOnTaskCreate =
-                  //     prefs.getBool('sync-OnTaskCreate') ?? false;
-                  // delaytask = prefs.getBool('delaytask') ?? false;
-                  // change24hr = prefs.getBool('24hourformate') ?? false;
+                homeController.syncOnStart.value =
+                    prefs.getBool('sync-onStart') ?? false;
+                homeController.syncOnTaskCreate.value =
+                    prefs.getBool('sync-OnTaskCreate') ?? false;
+                homeController.delaytask.value =
+                    prefs.getBool('delaytask') ?? false;
+                homeController.change24hr.value =
+                    prefs.getBool('24hourformate') ?? false;
+                // syncOnStart = prefs.getBool('sync-onStart') ?? false;
+                // syncOnTaskCreate =
+                //     prefs.getBool('sync-OnTaskCreate') ?? false;
+                // delaytask = prefs.getBool('delaytask') ?? false;
+                // change24hr = prefs.getBool('24hourformate') ?? false;
 
                 // print(syncOnStart);
                 // print(syncOnTaskCreate);
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => SettingsPage(
-                      isSyncOnStartActivel:homeController.syncOnStart.value,
-                      isSyncOnTaskCreateActivel:homeController.syncOnTaskCreate.value,
+                      isSyncOnStartActivel: homeController.syncOnStart.value,
+                      isSyncOnTaskCreateActivel:
+                          homeController.syncOnTaskCreate.value,
                       delaytask: homeController.delaytask.value,
-                      change24hr:homeController.change24hr.value,
+                      change24hr: homeController.change24hr.value,
                     ),
                   ),
                 );
@@ -158,61 +163,62 @@ class NavDrawer extends StatelessWidget {
     );
   }
 
-Future<void> _showExitConfirmationDialog(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // Prevents closing the dialog by tapping outside
-    builder: (BuildContext context) {
-      return Utils.showAlertDialog(
-        title: Text(
-          'Exit App',
-          style: TextStyle(
-            color: AppSettings.isDarkMode
-                ? TaskWarriorColors.white
-                : TaskWarriorColors.black,
-          ),
-        ),
-        content: Text(
-          'Are you sure you want to exit the app?',
-          style: TextStyle(
-            color: AppSettings.isDarkMode
-                ? TaskWarriorColors.white
-                : TaskWarriorColors.black,
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              'Cancel',
-              style: TextStyle(
-                color: AppSettings.isDarkMode
-                    ? TaskWarriorColors.white
-                    : TaskWarriorColors.black,
-              ),
+  Future<void> _showExitConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible:
+          false, // Prevents closing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return Utils.showAlertDialog(
+          title: Text(
+            'Exit App',
+            style: TextStyle(
+              color: AppSettings.isDarkMode
+                  ? TaskWarriorColors.white
+                  : TaskWarriorColors.black,
             ),
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
           ),
-          TextButton(
-            child: Text(
-              'Exit',
-              style: TextStyle(
-                color: AppSettings.isDarkMode
-                    ? TaskWarriorColors.white
-                    : TaskWarriorColors.black,
-              ),
+          content: Text(
+            'Are you sure you want to exit the app?',
+            style: TextStyle(
+              color: AppSettings.isDarkMode
+                  ? TaskWarriorColors.white
+                  : TaskWarriorColors.black,
             ),
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-              SystemNavigator.pop(); // Exit the app
-            },
           ),
-        ],
-      );
-    },
-  );
-}
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: AppSettings.isDarkMode
+                      ? TaskWarriorColors.white
+                      : TaskWarriorColors.black,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Exit',
+                style: TextStyle(
+                  color: AppSettings.isDarkMode
+                      ? TaskWarriorColors.white
+                      : TaskWarriorColors.black,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                SystemNavigator.pop(); // Exit the app
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget buildMenuItem(
       {required IconData icon,
