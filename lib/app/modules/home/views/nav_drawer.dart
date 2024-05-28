@@ -96,11 +96,12 @@ class NavDrawer extends StatelessWidget {
               icon: Icons.summarize,
               text: 'Reports',
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ReportsHome(),
-                  ),
-                );
+                Get.toNamed(Routes.REPORTS);
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => const ReportsHome(),
+                //   ),
+                // );
               },
             ),
             buildMenuItem(
