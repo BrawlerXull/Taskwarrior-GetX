@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskwarrior/app/models/filters.dart';
 import 'package:taskwarrior/app/modules/detailRoute/views/detail_route_view.dart';
+import 'package:taskwarrior/app/modules/home/views/add_task_bottom_sheet.dart';
 
 import 'package:taskwarrior/app/modules/home/views/filter_drawer_home_page.dart';
+import 'package:taskwarrior/app/modules/home/views/nav_drawer.dart';
 import 'package:taskwarrior/app/modules/home/views/tasks_builder.dart';
 import 'package:taskwarrior/app/modules/manageTaskServer/views/manage_task_server_view.dart';
 import 'package:taskwarrior/app/services/tag_filter.dart';
@@ -39,7 +41,6 @@ class HomeView extends GetView<HomeController> {
 
     controller.checkForSync(context);
 
-
     var taskData = controller.searchedTasks;
 
     var pendingFilter = controller.pendingFilter;
@@ -69,7 +70,7 @@ class HomeView extends GetView<HomeController> {
       toggleTagFilter: controller.toggleTagFilter,
     );
     var filters = Filters(
-      pendingFilter:controller.pendingFilter.value,
+      pendingFilter: controller.pendingFilter.value,
       waitingFilter: controller.waitingFilter.value,
       togglePendingFilter: controller.togglePendingFilter,
       toggleWaitingFilter: controller.toggleWaitingFilter,
@@ -164,9 +165,10 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
             ),
-            drawer: Obx(
-              () => NavDrawer(controller: controller, notifyParent: refresh),
-            ),
+            // drawer: Obx(
+            //   () => NavDrawer(controller: controller, notifyParent: refresh),
+            // ),
+            drawer: Obx(() => NavDrawer(homeController: controller)),
             body: DoubleBackToCloseApp(
               snackBar: const SnackBar(content: Text('Tap back again to exit')),
               // ignore: avoid_unnecessary_containers
@@ -257,13 +259,16 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
             ),
-            endDrawer: FilterDrawer(filters:filters , homeController: controller,),
+            endDrawer: FilterDrawer(
+              filters: filters,
+              homeController: controller,
+            ),
             floatingActionButton: FloatingActionButton(
                 heroTag: "btn3",
                 backgroundColor: AppSettings.isDarkMode
                     ? TaskWarriorColors.kLightPrimaryBackgroundColor
                     : TaskWarriorColors.kprimaryBackgroundColor,
-                child:  Tooltip(
+                child: Tooltip(
                   message: 'Add Task',
                   child: Icon(
                     Icons.add,
@@ -274,7 +279,9 @@ class HomeView extends GetView<HomeController> {
                 ),
                 onPressed: () => showDialog(
                       context: context,
-                      builder: (context) => const AddTaskBottomSheet(),
+                      builder: (context) => AddTaskBottomSheet(
+                        homeController: controller,
+                      ),
                     ).then((value) {
                       if (controller.isSyncNeeded.value && value != "cancel") {
                         controller.isNeededtoSyncOnStart(context);

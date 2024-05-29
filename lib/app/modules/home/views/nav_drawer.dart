@@ -138,17 +138,18 @@ class NavDrawer extends StatelessWidget {
 
                 // print(syncOnStart);
                 // print(syncOnTaskCreate);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => SettingsPage(
-                      isSyncOnStartActivel: homeController.syncOnStart.value,
-                      isSyncOnTaskCreateActivel:
-                          homeController.syncOnTaskCreate.value,
-                      delaytask: homeController.delaytask.value,
-                      change24hr: homeController.change24hr.value,
-                    ),
-                  ),
-                );
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => SettingsPage(
+                //       isSyncOnStartActivel: homeController.syncOnStart.value,
+                //       isSyncOnTaskCreateActivel:
+                //           homeController.syncOnTaskCreate.value,
+                //       delaytask: homeController.delaytask.value,
+                //       change24hr: homeController.change24hr.value,
+                //     ),
+                //   ),
+                // );
+                Get.toNamed(Routes.SETTINGS);
               },
             ),
             buildMenuItem(
