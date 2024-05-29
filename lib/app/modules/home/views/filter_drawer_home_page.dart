@@ -5,6 +5,8 @@ import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
 import 'package:taskwarrior/app/modules/home/views/project_column_home_page.dart';
 import 'package:taskwarrior/app/services/tag_filter.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
+import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
+import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
 
 class FilterDrawer extends StatelessWidget {
@@ -16,6 +18,9 @@ class FilterDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tileColor = AppSettings.isDarkMode
+        ? TaskWarriorColors.ksecondaryBackgroundColor
+        : TaskWarriorColors.kLightPrimaryBackgroundColor;
     return Drawer(
       backgroundColor: AppSettings.isDarkMode
           ? TaskWarriorColors.kprimaryBackgroundColor
@@ -56,9 +61,9 @@ class FilterDrawer extends StatelessWidget {
                 // width: MediaQuery.of(context).size.width * 1,
                 // padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  // color: tileColor,
+                  color: tileColor,
                   borderRadius: BorderRadius.circular(8),
-                  // border: Border.all(color: TaskWarriorColors.borderColor),
+                  border: Border.all(color: TaskWarriorColors.borderColor),
                 ),
                 child: ListTile(
                   contentPadding: const EdgeInsets.only(
@@ -69,58 +74,65 @@ class FilterDrawer extends StatelessWidget {
                     maxLines: 2,
                     text: TextSpan(
                       children: <TextSpan>[
-                        const TextSpan(
-                          text: 'Status : ',
-                          // style: GoogleFonts.poppins(
-                          //   fontWeight: TaskWarriorFonts.bold,
-                          //   fontSize: TaskWarriorFonts.fontSizeMedium,
-                          //   color: AppSettings.isDarkMode ? TaskWarriorColors.white : TaskWarriorColors.black,
-                          // ),
-                        ),
                         TextSpan(
-                          text: filters.pendingFilter ? 'pending' : 'completed',
-                          // style: GoogleFonts.poppins(
-                          //   fontSize: TaskWarriorFonts.fontSizeMedium,
-                          //   color: AppSettings.isDarkMode ? TaskWarriorColors.white : TaskWarriorColors.black,
-                          // ),
-                        ),
+                            text: 'Status : ',
+                            // style: GoogleFonts.poppins(
+                            //   fontWeight: TaskWarriorFonts.bold,
+                            //   fontSize: TaskWarriorFonts.fontSizeMedium,
+                            //   color: AppSettings.isDarkMode ? TaskWarriorColors.white : TaskWarriorColors.black,
+                            // ),
+                            style: TextStyle(
+                              fontFamily: FontFamily.poppins,
+                              fontSize: TaskWarriorFonts.fontSizeMedium,
+                              color: AppSettings.isDarkMode
+                                  ? TaskWarriorColors.white
+                                  : TaskWarriorColors.black,
+                            )),
+                        TextSpan(
+                            text:
+                                filters.pendingFilter ? 'pending' : 'completed',
+                            // style: GoogleFonts.poppins(
+                            //   fontSize: TaskWarriorFonts.fontSizeMedium,
+                            //   color: AppSettings.isDarkMode ? TaskWarriorColors.white : TaskWarriorColors.black,
+                            // ),
+                            style: TextStyle(
+                              fontFamily: FontFamily.poppins,
+                              fontSize: TaskWarriorFonts.fontSizeMedium,
+                              color: AppSettings.isDarkMode
+                                  ? TaskWarriorColors.white
+                                  : TaskWarriorColors.black,
+                            )),
                       ],
                     ),
                   ),
                   onTap: filters.togglePendingFilter,
-                  // textColor: AppSettings.isDarkMode
-                  //     ? TaskWarriorColors.kprimaryTextColor
-                  //     : TaskWarriorColors.kLightSecondaryTextColor,
+                  textColor: AppSettings.isDarkMode
+                      ? TaskWarriorColors.kprimaryTextColor
+                      : TaskWarriorColors.kLightSecondaryTextColor,
                 ),
-              ),
-              const Divider(
-                color: Color.fromARGB(0, 48, 46, 46),
               ),
               const Divider(
                 color: Color.fromARGB(0, 48, 46, 46),
               ),
               Container(
                 decoration: BoxDecoration(
-                  // color: tileColor,
+                  color: tileColor,
                   borderRadius: BorderRadius.circular(2),
-                  // border: Border.all(color: TaskWarriorColors.borderColor),
+                  border: Border.all(color: TaskWarriorColors.borderColor),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                     onTap: filters.toggleWaitingFilter,
                     child: Text(
-                      filters.waitingFilter ? 'Show waiting' : 'Hide waiting',
-                      // style: GoogleFonts.poppins(
-                      //   color: (
-                      //     AppSettings.isDarkMode
-                      //         ? TaskWarriorColors.kprimaryTextColor
-                      //         : TaskWarriorColors.kLightSecondaryTextColor,
-                      //   ),
-                      //   //
-                      //   fontSize: TaskWarriorFonts.fontSizeMedium,
-                      // ),
-                    ),
+                        filters.waitingFilter ? 'Show waiting' : 'Hide waiting',
+                        style: TextStyle(
+                          fontFamily: FontFamily.poppins,
+                          fontSize: TaskWarriorFonts.fontSizeMedium,
+                          color: AppSettings.isDarkMode
+                              ? TaskWarriorColors.kprimaryTextColor
+                              : TaskWarriorColors.kLightSecondaryTextColor,
+                        )),
                   ),
                 ),
               ),
@@ -130,13 +142,13 @@ class FilterDrawer extends StatelessWidget {
               Container(
                 // key: projectsKey,
                 width: MediaQuery.of(context).size.width * 1,
-                // padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  // color: tileColor,
+                  color: tileColor,
                   borderRadius: BorderRadius.circular(8),
-                  // border: Border.all(
-                  //   color: TaskWarriorColors.borderColor,
-                  // ),
+                  border: Border.all(
+                    color: TaskWarriorColors.borderColor,
+                  ),
                 ),
                 child: ProjectsColumn(
                   projects: filters.projects,
@@ -152,9 +164,9 @@ class FilterDrawer extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 1,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  // color: tileColor,
+                  color: tileColor,
                   borderRadius: BorderRadius.circular(8),
-                  // border: Border.all(color: TaskWarriorColors.borderColor),
+                  border: Border.all(color: TaskWarriorColors.borderColor),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +175,7 @@ class FilterDrawer extends StatelessWidget {
                     const Divider(
                       color: Color.fromARGB(0, 48, 46, 46),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 0.0),
                       child: Text(
                         'Filter Tag By:',
@@ -174,6 +186,13 @@ class FilterDrawer extends StatelessWidget {
                         //     //
                         //     fontSize: TaskWarriorFonts.fontSizeLarge),
                         //textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontFamily: FontFamily.poppins,
+                          fontSize: TaskWarriorFonts.fontSizeMedium,
+                          color: AppSettings.isDarkMode
+                              ? TaskWarriorColors.kprimaryTextColor
+                              : TaskWarriorColors.kLightSecondaryTextColor,
+                        ),
                       ),
                     ),
                     const Divider(
@@ -197,9 +216,9 @@ class FilterDrawer extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 1,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  // color: tileColor,
+                  color: tileColor,
                   borderRadius: BorderRadius.circular(8),
-                  // border: Border.all(color: TaskWarriorColors.borderColor),
+                  border: Border.all(color: TaskWarriorColors.borderColor),
                 ),
                 //height: 30,
                 child: Column(
@@ -208,7 +227,7 @@ class FilterDrawer extends StatelessWidget {
                     const Divider(
                       color: Color.fromARGB(0, 48, 46, 46),
                     ),
-                    const Padding(
+                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 0.0),
                       child: Text(
                         'Sort By',
@@ -218,6 +237,13 @@ class FilterDrawer extends StatelessWidget {
                         //         : TaskWarriorColors.kLightPrimaryTextColor),
                         //     fontSize: TaskWarriorFonts.fontSizeLarge),
                         // textAlign: TextAlign.right,
+                        style: TextStyle(
+                              fontFamily: FontFamily.poppins,
+                              fontSize: TaskWarriorFonts.fontSizeMedium,
+                              color: AppSettings.isDarkMode
+                                  ? TaskWarriorColors.white
+                                  : TaskWarriorColors.black,
+                            )
                       ),
                     ),
                     const Divider(
@@ -283,26 +309,33 @@ class FilterDrawer extends StatelessWidget {
                         //     : TaskWarriorColors.ksecondaryBackgroundColor,
                       ),
                       child: TextButton(
-                          onPressed: () {
-                            if (homeController.selectedSort.value
-                                    .endsWith('+') ||
-                                homeController.selectedSort.value
-                                    .endsWith('-')) {
-                              homeController.selectSort(
-                                  homeController.selectedSort.value.substring(
-                                      0,
-                                      homeController.selectedSort.value.length -
-                                          1));
-                            }
-                          },
-                          child: const Text(
-                            'Reset Sort',
-                            // style: GoogleFonts.poppins(
-                            //     fontSize: TaskWarriorFonts.fontSizeMedium,
-                            //     color: AppSettings.isDarkMode
-                            //         ? TaskWarriorColors.kLightSecondaryTextColor
-                            //         : TaskWarriorColors.ksecondaryTextColor),
-                          )),
+                        onPressed: () {
+                          if (homeController.selectedSort.value.endsWith('+') ||
+                              homeController.selectedSort.value.endsWith('-')) {
+                            homeController.selectSort(
+                                homeController.selectedSort.value.substring(
+                                    0,
+                                    homeController.selectedSort.value.length -
+                                        1));
+                          }
+                        },
+                        child:  Text(
+                          'Reset Sort',
+                          // style: GoogleFonts.poppins(
+                          //     fontSize: TaskWarriorFonts.fontSizeMedium,
+                          //     color: AppSettings.isDarkMode
+                          //         ? TaskWarriorColors.kLightSecondaryTextColor
+                          //         : TaskWarriorColors.ksecondaryTextColor),
+                          style: TextStyle(
+                              fontFamily: FontFamily.poppins,
+                              fontSize: TaskWarriorFonts.fontSizeMedium,
+                              color: AppSettings.isDarkMode
+                                  ? TaskWarriorColors.white
+                                  : TaskWarriorColors.black,
+                            )
+                        ),
+
+                      ),
                     ),
                     const Divider(
                       color: Color.fromARGB(0, 48, 46, 46),
