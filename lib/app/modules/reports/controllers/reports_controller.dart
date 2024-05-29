@@ -71,6 +71,7 @@ class ReportsController extends GetxController
     // showReportsTour();
     initDailyReports();
     initWeeklyReports();
+    initMonthlyReports();
 
     tabController = TabController(length: 3, vsync: this);
 
@@ -84,16 +85,13 @@ class ReportsController extends GetxController
     });
   }
 
-
   /// This method is used to get the daily burn down data
   late TooltipBehavior dailyBurndownTooltipBehaviour;
 
   ///this method is used to get the weekly burn down data
   late TooltipBehavior weeklyBurndownTooltipBehaviour;
 
-
   // daily report
-
 
   void initDailyReports() {
     ///initialize the _dailyBurndownTooltipBehaviour tooltip behavior
@@ -120,15 +118,21 @@ class ReportsController extends GetxController
                 // style: GoogleFonts.poppins(
                 //   fontWeight: TaskWarriorFonts.bold,
                 // ),
+
                 style: const TextStyle(
                     fontFamily: FontFamily.poppins,
-                    fontWeight: TaskWarriorFonts.bold),
+                    fontWeight: TaskWarriorFonts.bold,
+                    color: Colors.black),
               ),
               Text(
                 'Pending: $pendingCount',
+                style: const TextStyle(
+                    fontWeight: TaskWarriorFonts.bold, color: Colors.black),
               ),
               Text(
                 'Completed: $completedCount',
+                style: const TextStyle(
+                    fontWeight: TaskWarriorFonts.bold, color: Colors.black),
               ),
             ],
           ),
@@ -142,9 +146,9 @@ class ReportsController extends GetxController
       var currentProfile = Get.find<SplashController>().currentProfile;
 
       Directory baseDirectory = Get.find<SplashController>().baseDirectory();
-        storage = Storage(
-          Directory('${baseDirectory.path}/profiles/$currentProfile'),
-        );
+      storage = Storage(
+        Directory('${baseDirectory.path}/profiles/$currentProfile'),
+      );
 
       ///fetch all data contains all the tasks
       allData.value = storage.data.allData();
@@ -160,7 +164,7 @@ class ReportsController extends GetxController
   /// dailyInfo is a map that contains the daily burn down data
   /// The key is the date (formatted as "MM-dd") and the value is a map
   /// containing the pending and completed tasks count for that day.
-  RxMap<String, Map<String, int>> dailyInfo =<String, Map<String, int>> {}.obs;
+  RxMap<String, Map<String, int>> dailyInfo = <String, Map<String, int>>{}.obs;
 
   void sortBurnDownDaily() {
     // Initialize dailyInfo map
@@ -196,8 +200,7 @@ class ReportsController extends GetxController
     debugPrint("dailyInfo $dailyInfo");
   }
 
-  // weekly 
-
+  // weekly reports
 
   ///weeklyInfo is a map that contains the weekly burn down data
   ///first int holds the week value
@@ -239,9 +242,8 @@ class ReportsController extends GetxController
 
     debugPrint("weeklyInfo $weeklyInfo");
   }
+
   void initWeeklyReports() {
-
-
     ///initialize the _weeklyBurndownTooltipBehaviour tooltip behavior
     weeklyBurndownTooltipBehaviour = TooltipBehavior(
       enable: true,
@@ -264,14 +266,17 @@ class ReportsController extends GetxController
               Text(
                 weekNumber,
                 style: const TextStyle(
-                  fontWeight: TaskWarriorFonts.bold,
-                ),
+                    fontWeight: TaskWarriorFonts.bold, color: Colors.black),
               ),
               Text(
                 'Pending: $pendingCount',
+                style: const TextStyle(
+                    fontWeight: TaskWarriorFonts.bold, color: Colors.black),
               ),
               Text(
                 'Completed: $completedCount',
+                style: const TextStyle(
+                    fontWeight: TaskWarriorFonts.bold, color: Colors.black),
               ),
             ],
           ),
@@ -285,9 +290,9 @@ class ReportsController extends GetxController
       var currentProfile = Get.find<SplashController>().currentProfile;
 
       Directory baseDirectory = Get.find<SplashController>().baseDirectory();
-        storage = Storage(
-          Directory('${baseDirectory.path}/profiles/$currentProfile'),
-        );
+      storage = Storage(
+        Directory('${baseDirectory.path}/profiles/$currentProfile'),
+      );
 
       ///fetch all data contains all the tasks
       allData.value = storage.data.allData();
@@ -296,6 +301,105 @@ class ReportsController extends GetxController
       if (allData.isNotEmpty) {
         ///sort the data by weekly burn down
         sortBurnDownWeekLy();
+      }
+    });
+  }
+
+  // monthly report
+  late TooltipBehavior monthlyBurndownTooltipBehaviour;
+  RxMap<String, Map<String, int>> monthlyInfo = <String, Map<String, int>>{}.obs;
+
+  void sortBurnDownMonthly() {
+    monthlyInfo.value = {};
+
+    allData.sort((a, b) => a.entry.compareTo(b.entry));
+
+    for (int i = 0; i < allData.length; i++) {
+      final DateTime entryDate = allData[i].entry;
+      final String monthYear =
+          '${Utils.getMonthName(entryDate.month)} ${entryDate.year}';
+
+      if (monthlyInfo.containsKey(monthYear)) {
+        if (allData[i].status == 'pending') {
+          monthlyInfo[monthYear]!['pending'] =
+              (monthlyInfo[monthYear]!['pending'] ?? 0) + 1;
+        } else if (allData[i].status == 'completed') {
+          monthlyInfo[monthYear]!['completed'] =
+              (monthlyInfo[monthYear]!['completed'] ?? 0) + 1;
+        }
+      } else {
+        monthlyInfo[monthYear] = {
+          'pending': allData[i].status == 'pending' ? 1 : 0,
+          'completed': allData[i].status == 'completed' ? 1 : 0,
+        };
+      }
+    }
+
+    debugPrint("monthlyInfo: $monthlyInfo");
+  }
+
+  void initMonthlyReports() {
+    monthlyBurndownTooltipBehaviour = TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        final String monthYear = data.x;
+        final int pendingCount = data.y1;
+        final int completedCount = data.y2;
+
+        return Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Month-Year: $monthYear',
+                 style: const TextStyle(
+                    fontFamily: FontFamily.poppins,
+                    fontWeight: TaskWarriorFonts.bold,
+                    color: Colors.black),
+              ),
+              Text(
+                'Pending: $pendingCount', style: const TextStyle(
+                    fontFamily: FontFamily.poppins,
+                    fontWeight: TaskWarriorFonts.bold,
+                    color: Colors.black),
+              ),
+              Text(
+                'Completed: $completedCount', style: const TextStyle(
+                    fontFamily: FontFamily.poppins,
+                    fontWeight: TaskWarriorFonts.bold,
+                    color: Colors.black),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    ///initialize the storage widget
+    Future.delayed(Duration.zero, () {
+      storageWidget = Get.find<HomeController>();
+      var currentProfile = Get.find<SplashController>().currentProfile;
+
+      Directory baseDirectory = Get.find<SplashController>().baseDirectory();
+      storage = Storage(
+        Directory('${baseDirectory.path}/profiles/$currentProfile'),
+      );
+
+      ///fetch all data contains all the tasks
+      allData.value = storage.data.allData();
+
+
+      ///check if allData is not empty
+      if (allData.isNotEmpty) {
+        ///sort the data by weekly burn down
+        sortBurnDownMonthly();
       }
     });
   }

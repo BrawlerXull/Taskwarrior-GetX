@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:taskwarrior/app/modules/reports/views/burn_down_daily.dart';
+import 'package:taskwarrior/app/modules/reports/views/burn_down_monthly.dart';
 import 'package:taskwarrior/app/modules/reports/views/burn_down_weekly.dart';
 import 'package:taskwarrior/app/utils/constants/constants.dart';
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
@@ -127,7 +128,7 @@ class ReportsView extends GetView<ReportsController> {
                   BurnDownWeekly(
                     reportsController: controller,
                   ),
-                  // BurnDownMonthly(),
+                  BurnDownMonthly(reportsController: controller,),
                 ],
               ),
       ),
