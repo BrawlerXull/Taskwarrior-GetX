@@ -118,7 +118,7 @@ class TasksBuilder extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.transparent,
-      body: taskData.isEmpty
+      body: Obx(()=>taskData.isEmpty
           ? Padding(
               padding: const EdgeInsets.all(16.0),
               child: Center(
@@ -236,7 +236,7 @@ class TasksBuilder extends StatelessWidget {
                         ),
                       );
               },
-            ),
+            ),)
     );
   }
 }
