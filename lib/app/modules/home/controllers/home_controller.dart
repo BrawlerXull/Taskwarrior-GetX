@@ -11,12 +11,14 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/state_manager.dart';
 import 'package:loggy/loggy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:taskwarrior/app/models/filters.dart';
 
 import 'package:taskwarrior/app/models/json/task.dart';
 import 'package:taskwarrior/app/models/storage.dart';
 import 'package:taskwarrior/app/models/storage/client.dart';
 import 'package:taskwarrior/app/models/tag_meta_data.dart';
 import 'package:taskwarrior/app/modules/splash/controllers/splash_controller.dart';
+import 'package:taskwarrior/app/services/tag_filter.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/comparator.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/projects.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/query.dart';
@@ -410,4 +412,40 @@ class HomeController extends GetxController {
   final tagcontroller = TextEditingController();
   RxList<String> tags = <String>[].obs;
   RxBool inThePast = false.obs;
+
+  Filters getFilters() {
+    var selectedTagsMap = {
+      for (var tag in selectedTags) tag.substring(1): tag,
+    };
+
+    var keys = (pendingTags.keys.toSet()..addAll(selectedTagsMap.keys)).toList()
+      ..sort();
+
+    var tags = {
+      for (var tag in keys)
+        tag: TagFilterMetadata(
+          display:
+              '${selectedTagsMap[tag] ?? tag} ${pendingTags[tag]?.frequency ?? 0}',
+          selected: selectedTagsMap.containsKey(tag),
+        ),
+    };
+
+    var tagFilters = TagFilters(
+      tagUnion: tagUnion.value,
+      toggleTagUnion: toggleTagUnion,
+      tags: tags,
+      toggleTagFilter: toggleTagFilter,
+    );
+    var filters = Filters(
+      pendingFilter: pendingFilter.value,
+      waitingFilter: waitingFilter.value,
+      togglePendingFilter: togglePendingFilter,
+      toggleWaitingFilter: toggleWaitingFilter,
+      projects: projects,
+      projectFilter: projectFilter.value,
+      toggleProjectFilter: toggleProjectFilter,
+      tagFilters: tagFilters,
+    );
+    return filters;
+  }
 }

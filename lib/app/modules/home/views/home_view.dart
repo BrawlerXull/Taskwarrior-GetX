@@ -47,39 +47,6 @@ class HomeView extends GetView<HomeController> {
     var waitingFilter = controller.waitingFilter;
     var pendingTags = controller.pendingTags;
 
-    var selectedTagsMap = {
-      for (var tag in controller.selectedTags) tag.substring(1): tag,
-    };
-
-    var keys = (pendingTags.keys.toSet()..addAll(selectedTagsMap.keys)).toList()
-      ..sort();
-
-    var tags = {
-      for (var tag in keys)
-        tag: TagFilterMetadata(
-          display:
-              '${selectedTagsMap[tag] ?? tag} ${pendingTags[tag]?.frequency ?? 0}',
-          selected: selectedTagsMap.containsKey(tag),
-        ),
-    };
-
-    var tagFilters = TagFilters(
-      tagUnion: controller.tagUnion.value,
-      toggleTagUnion: controller.toggleTagUnion,
-      tags: tags,
-      toggleTagFilter: controller.toggleTagFilter,
-    );
-    var filters = Filters(
-      pendingFilter: controller.pendingFilter.value,
-      waitingFilter: controller.waitingFilter.value,
-      togglePendingFilter: controller.togglePendingFilter,
-      toggleWaitingFilter: controller.toggleWaitingFilter,
-      projects: controller.projects,
-      projectFilter: controller.projectFilter.value,
-      toggleProjectFilter: controller.toggleProjectFilter,
-      tagFilters: tagFilters,
-    );
-
     return isHomeWidgetTaskTapped == false
         ? Scaffold(
             appBar: AppBar(
@@ -108,41 +75,40 @@ class HomeView extends GetView<HomeController> {
                 ),
                 Builder(
                   builder: (context) => IconButton(
-                      icon: Icon(Icons.refresh, color: TaskWarriorColors.white),
-                      onPressed: () {
-                        if (server != null || credentials != null) {
-                          controller.synchronize(context, true);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: const Text(
-                                'TaskServer is not configured',
-                                style: TextStyle(
-                                    // color: AppSettings.isDarkMode
-                                    //     ? TaskWarriorColors.white
-                                    //     : TaskWarriorColors.black,
-                                    ),
-                              ),
-                              action: SnackBarAction(
-                                label: 'Set Up',
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            const ManageTaskServerView(),
-                                      )).then((value) {
-                                    // setState(() {});
-                                  });
-                                },
-                                textColor: TaskWarriorColors.purple,
-                              ),
+                    icon: Icon(Icons.refresh, color: TaskWarriorColors.white),
+                    onPressed: () {
+                      if (server != null || credentials != null) {
+                        controller.synchronize(context, true);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text(
+                              'TaskServer is not configured',
+                              style: TextStyle(
+                                  // color: AppSettings.isDarkMode
+                                  //     ? TaskWarriorColors.white
+                                  //     : TaskWarriorColors.black,
+                                  ),
                             ),
-                          );
-                        }
-                      },
-                    ),
-
+                            action: SnackBarAction(
+                              label: 'Set Up',
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const ManageTaskServerView(),
+                                    )).then((value) {
+                                  // setState(() {});
+                                });
+                              },
+                              textColor: TaskWarriorColors.purple,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
                 Builder(
                   builder: (context) => IconButton(
@@ -244,12 +210,15 @@ class HomeView extends GetView<HomeController> {
                           ),
                         Expanded(
                           child: Scrollbar(
-                            child: TasksBuilder(
-                                // darkmode: AppSettings.isDarkMode,
-                                taskData: taskData,
-                                pendingFilter: pendingFilter.value,
-                                waitingFilter: waitingFilter.value,
-                                searchVisible: controller.searchVisible.value),
+                            child: Obx(
+                              () => TasksBuilder(
+                                  // darkmode: AppSettings.isDarkMode,
+                                  taskData: taskData,
+                                  pendingFilter: pendingFilter.value,
+                                  waitingFilter: waitingFilter.value,
+                                  searchVisible:
+                                      controller.searchVisible.value),
+                            ),
                           ),
                         ),
                       ],
@@ -258,9 +227,11 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
             ),
-            endDrawer: FilterDrawer(
-              filters: filters,
-              homeController: controller,
+            endDrawer: Obx(
+              () => FilterDrawer(
+                filters: controller.getFilters(),
+                homeController: controller,
+              ),
             ),
             floatingActionButton: FloatingActionButton(
                 heroTag: "btn3",

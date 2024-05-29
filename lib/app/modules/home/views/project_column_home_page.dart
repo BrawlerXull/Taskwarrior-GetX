@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -123,7 +124,7 @@ class ProjectsColumn extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 2.h,
+                height: Get.height * 0.02,
               ),
             ],
           ),

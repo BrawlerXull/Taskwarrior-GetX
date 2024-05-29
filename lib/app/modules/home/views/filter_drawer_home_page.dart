@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:taskwarrior/app/models/filters.dart';
 import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
 import 'package:taskwarrior/app/modules/home/views/project_column_home_page.dart';
 import 'package:taskwarrior/app/services/tag_filter.dart';
+import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
+import 'package:taskwarrior/app/utils/theme/app_settings.dart';
 
 class FilterDrawer extends StatelessWidget {
   final Filters filters;
@@ -14,12 +17,12 @@ class FilterDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // backgroundColor: AppSettings.isDarkMode
-      //     ? TaskWarriorColors.kprimaryBackgroundColor
-      //     : TaskWarriorColors.kLightPrimaryBackgroundColor,
-      // surfaceTintColor: AppSettings.isDarkMode
-      //     ? TaskWarriorColors.kprimaryBackgroundColor
-      //     : TaskWarriorColors.kLightPrimaryBackgroundColor,
+      backgroundColor: AppSettings.isDarkMode
+          ? TaskWarriorColors.kprimaryBackgroundColor
+          : TaskWarriorColors.kLightPrimaryBackgroundColor,
+      surfaceTintColor: AppSettings.isDarkMode
+          ? TaskWarriorColors.kprimaryBackgroundColor
+          : TaskWarriorColors.kLightPrimaryBackgroundColor,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -236,33 +239,35 @@ class FilterDrawer extends StatelessWidget {
                             'Tags',
                             'Urgency',
                           ])
-                            ChoiceChip(
-                              label: (homeController.selectedSort.value
-                                      .startsWith(sort))
-                                  ? Text(
-                                      homeController.selectedSort.value,
-                                    )
-                                  : Text(sort),
-                              selected: false,
-                              onSelected: (_) {
-                                if (homeController.selectedSort == '$sort+') {
-                                  homeController.selectSort('$sort-');
-                                } else if (homeController.selectedSort ==
-                                    '$sort-') {
-                                  homeController.selectSort(sort);
-                                } else {
-                                  homeController.selectSort('$sort+');
-                                }
-                              },
-                              // labelStyle: GoogleFonts.poppins(
-                              //     color: AppSettings.isDarkMode
-                              //         ? TaskWarriorColors.black
-                              //         : TaskWarriorColors.white),
-                              // backgroundColor: AppSettings.isDarkMode
-                              //     ? TaskWarriorColors
-                              //         .kLightSecondaryBackgroundColor
-                              //     : TaskWarriorColors.ksecondaryBackgroundColor,
-                            ),
+                            Obx(
+                              () => ChoiceChip(
+                                label: (homeController.selectedSort.value
+                                        .startsWith(sort))
+                                    ? Text(
+                                        homeController.selectedSort.value,
+                                      )
+                                    : Text(sort),
+                                selected: false,
+                                onSelected: (_) {
+                                  if (homeController.selectedSort == '$sort+') {
+                                    homeController.selectSort('$sort-');
+                                  } else if (homeController.selectedSort ==
+                                      '$sort-') {
+                                    homeController.selectSort(sort);
+                                  } else {
+                                    homeController.selectSort('$sort+');
+                                  }
+                                },
+                                // labelStyle: GoogleFonts.poppins(
+                                //     color: AppSettings.isDarkMode
+                                //         ? TaskWarriorColors.black
+                                //         : TaskWarriorColors.white),
+                                // backgroundColor: AppSettings.isDarkMode
+                                //     ? TaskWarriorColors
+                                //         .kLightSecondaryBackgroundColor
+                                //     : TaskWarriorColors.ksecondaryBackgroundColor,
+                              ),
+                            )
                         ],
                       ),
                     ),
