@@ -42,7 +42,7 @@ class AboutView extends GetView<AboutController> {
           ? TaskWarriorColors.kprimaryBackgroundColor
           : TaskWarriorColors.white,
       body: Padding(
-        padding: EdgeInsets.only(top: 1.h, left: 2.w, right: 2.w),
+        padding: EdgeInsets.only(top: Get.height * 0.01, left: Get.width * 0.02, right: Get.width * 0.02),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -50,11 +50,11 @@ class AboutView extends GetView<AboutController> {
               SizedBox(
                   child: SvgPicture.asset(
                 Assets.svg.logo.path,
-                height: 20.h,
-                width: 100.w,
+                height: Get.height * 0.2,
+                width: Get.width * 1,
               )),
               SizedBox(
-                height: 2.h,
+                height: Get.height * 0.02,
               ),
               Text(
                 "Taskwarrior",
@@ -67,7 +67,7 @@ class AboutView extends GetView<AboutController> {
                 ),
               ),
               SizedBox(
-                height: 2.h,
+                height: Get.height * 0.02,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +111,7 @@ class AboutView extends GetView<AboutController> {
                               ),
                             ),
                             SizedBox(
-                              width: 85.w,
+                              width: Get.width * 0.85,
                               child: FittedBox(
                                 fit: BoxFit.fitWidth,
                                 child: RichText(
@@ -151,7 +151,7 @@ class AboutView extends GetView<AboutController> {
                 ],
               ),
               SizedBox(
-                height: 5.h,
+                height: Get.height * 0.05,
               ),
               Text(
                 introduction,
@@ -165,14 +165,14 @@ class AboutView extends GetView<AboutController> {
                 ),
               ),
               SizedBox(
-                height: 6.h,
+                height: Get.height * 0.06,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   SizedBox(
-                    width: 40.w,
-                    height: 5.h,
+                    width: Get.width * 0.4,
+                    height: Get.height * 0.05,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppSettings.isDarkMode
@@ -192,8 +192,8 @@ class AboutView extends GetView<AboutController> {
                         }
                       },
                       icon: SvgPicture.asset(Assets.svg.github.path,
-                          width: 15.sp,
-                          height: 15.sp,
+                          width: 150,
+                          height: 150,
                           colorFilter: ColorFilter.mode(
                               AppSettings.isDarkMode
                                   ? TaskWarriorColors.black
@@ -212,8 +212,8 @@ class AboutView extends GetView<AboutController> {
                     ),
                   ),
                   SizedBox(
-                    width: 40.w,
-                    height: 5.h,
+                    width: Get.width * 0.4,
+                    height: Get.height * 0.05,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppSettings.isDarkMode
@@ -230,8 +230,8 @@ class AboutView extends GetView<AboutController> {
                         }
                       },
                       icon: SvgPicture.asset("assets/svg/link.svg",
-                          width: 15.sp,
-                          height: 15.sp,
+                          width: 150,
+                          height: 150,
                           colorFilter: ColorFilter.mode(
                               AppSettings.isDarkMode
                                   ? TaskWarriorColors.black
@@ -252,7 +252,8 @@ class AboutView extends GetView<AboutController> {
                 ],
               ),
               SizedBox(
-                height: 2.h,
+
+                height: Get.height * 0.02,
               ),
               Text(
                 "Eager to enhance this project? Visit our GitHub repository.",
@@ -266,7 +267,7 @@ class AboutView extends GetView<AboutController> {
                 ),
               ),
               SizedBox(
-                height: 2.h,
+                height: Get.height * 0.02,
               ),
             ],
           ),
@@ -275,6 +276,7 @@ class AboutView extends GetView<AboutController> {
     );
   }
 }
+
 Future<String> getAppInfo() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
