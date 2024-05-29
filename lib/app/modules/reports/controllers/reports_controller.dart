@@ -26,6 +26,7 @@ class ReportsController extends GetxController
   var selectedIndex = 0.obs;
   var allData = <Task>[].obs;
   late Storage storage;
+  var storageWidget;
 
   // void _initReportsTour() {
   //   tutorialCoachMark = TutorialCoachMark(
@@ -69,6 +70,7 @@ class ReportsController extends GetxController
     // _initReportsTour();
     // showReportsTour();
     initDailyReports();
+    initWeeklyReports();
 
     tabController = TabController(length: 3, vsync: this);
 
@@ -82,9 +84,16 @@ class ReportsController extends GetxController
     });
   }
 
+
+  /// This method is used to get the daily burn down data
+  late TooltipBehavior dailyBurndownTooltipBehaviour;
+
+  ///this method is used to get the weekly burn down data
+  late TooltipBehavior weeklyBurndownTooltipBehaviour;
+
+
   // daily report
 
-  var storageWidget;
 
   void initDailyReports() {
     ///initialize the _dailyBurndownTooltipBehaviour tooltip behavior
@@ -187,6 +196,107 @@ class ReportsController extends GetxController
     debugPrint("dailyInfo $dailyInfo");
   }
 
-  /// This method is used to get the daily burn down data
-  late TooltipBehavior dailyBurndownTooltipBehaviour;
+  // weekly 
+
+
+  ///weeklyInfo is a map that contains the weekly burn down data
+  ///first int holds the week value
+  ///the second map holds the pending and completed tasks
+  ///the key is the status and the value is the count
+  RxMap<int, Map<String, int>> weeklyInfo = <int, Map<String, int>>{}.obs;
+
+  void sortBurnDownWeekLy() {
+    // Initialize weeklyInfo map
+    weeklyInfo.value = {};
+
+    // Sort allData by entry date in ascending order
+    allData.sort((a, b) => a.entry.compareTo(b.entry));
+
+    ///loop through allData and get the week number
+    for (int i = 0; i < allData.length; i++) {
+      final int weekNumber = Utils.getWeekNumbertoInt(allData[i].entry);
+
+      ///check if weeklyInfo contains the week number
+      if (weeklyInfo.containsKey(weekNumber)) {
+        ///check if the status is pending or completed
+        if (allData[i].status == 'pending') {
+          ///if the status is pending then add 1 to the pending count
+          weeklyInfo[weekNumber]!['pending'] =
+              (weeklyInfo[weekNumber]!['pending'] ?? 0) + 1;
+        } else if (allData[i].status == 'completed') {
+          ///if the status is completed then add 1 to the completed count
+          weeklyInfo[weekNumber]!['completed'] =
+              (weeklyInfo[weekNumber]!['completed'] ?? 0) + 1;
+        }
+      } else {
+        ///if weeklyInfo does not contain the week number
+        weeklyInfo[weekNumber] = {
+          'pending': allData[i].status == 'pending' ? 1 : 0,
+          'completed': allData[i].status == 'completed' ? 1 : 0,
+        };
+      }
+    }
+
+    debugPrint("weeklyInfo $weeklyInfo");
+  }
+  void initWeeklyReports() {
+
+
+    ///initialize the _weeklyBurndownTooltipBehaviour tooltip behavior
+    weeklyBurndownTooltipBehaviour = TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        final String weekNumber = data.x;
+        final int pendingCount = data.y1;
+        final int completedCount = data.y2;
+
+        return Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                weekNumber,
+                style: const TextStyle(
+                  fontWeight: TaskWarriorFonts.bold,
+                ),
+              ),
+              Text(
+                'Pending: $pendingCount',
+              ),
+              Text(
+                'Completed: $completedCount',
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    ///initialize the storage widget
+    Future.delayed(Duration.zero, () {
+      storageWidget = Get.find<HomeController>();
+      var currentProfile = Get.find<SplashController>().currentProfile;
+
+      Directory baseDirectory = Get.find<SplashController>().baseDirectory();
+        storage = Storage(
+          Directory('${baseDirectory.path}/profiles/$currentProfile'),
+        );
+
+      ///fetch all data contains all the tasks
+      allData.value = storage.data.allData();
+
+      ///check if allData is not empty
+      if (allData.isNotEmpty) {
+        ///sort the data by weekly burn down
+        sortBurnDownWeekLy();
+      }
+    });
+  }
 }
