@@ -8,8 +8,6 @@ import 'package:taskwarrior/app/modules/detailRoute/views/description_widget.dar
 import 'package:taskwarrior/app/modules/detailRoute/views/priority_widget.dart';
 import 'package:taskwarrior/app/modules/detailRoute/views/status_widget.dart';
 import 'package:taskwarrior/app/modules/detailRoute/views/tags_widget.dart';
-import 'package:taskwarrior/app/modules/home/views/home_view.dart';
-import 'package:taskwarrior/app/routes/app_pages.dart';
 import 'package:taskwarrior/app/utils/constants/constants.dart';
 import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/urgency.dart';

@@ -2,7 +2,6 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:taskwarrior/app/models/filters.dart';
 import 'package:taskwarrior/app/modules/detailRoute/views/detail_route_view.dart';
 import 'package:taskwarrior/app/modules/home/views/add_task_bottom_sheet.dart';
 
@@ -10,7 +9,6 @@ import 'package:taskwarrior/app/modules/home/views/filter_drawer_home_page.dart'
 import 'package:taskwarrior/app/modules/home/views/nav_drawer.dart';
 import 'package:taskwarrior/app/modules/home/views/tasks_builder.dart';
 import 'package:taskwarrior/app/modules/manageTaskServer/views/manage_task_server_view.dart';
-import 'package:taskwarrior/app/services/tag_filter.dart';
 import 'package:taskwarrior/app/utils/constants/palette.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
@@ -151,11 +149,11 @@ class HomeView extends GetView<HomeController> {
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 10),
                             child: SearchBar(
-                              backgroundColor: MaterialStateProperty.all<Color>(
+                              backgroundColor: WidgetStateProperty.all<Color>(
                                   (TaskWarriorColors
                                       .kLightPrimaryBackgroundColor)),
                               surfaceTintColor:
-                                  MaterialStateProperty.all<Color>(
+                                  WidgetStateProperty.all<Color>(
                                       (TaskWarriorColors
                                           .kLightPrimaryBackgroundColor)),
                               controller: controller.searchController,
@@ -164,10 +162,10 @@ class HomeView extends GetView<HomeController> {
                                 controller.search(value);
                               },
 
-                              shape: MaterialStateProperty.resolveWith<
+                              shape: WidgetStateProperty.resolveWith<
                                   OutlinedBorder?>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.focused)) {
+                                (Set<WidgetState> states) {
+                                  if (states.contains(WidgetState.focused)) {
                                     return RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12.0),
                                       side: BorderSide(

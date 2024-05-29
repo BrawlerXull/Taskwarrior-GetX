@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -13,25 +12,14 @@ import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
 import 'package:taskwarrior/app/utils/constants/utilites.dart';
 
 import '../controllers/settings_controller.dart';
-import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-import 'package:taskwarrior/app/models/filters.dart';
-import 'package:taskwarrior/app/modules/detailRoute/views/detail_route_view.dart';
 
-import 'package:taskwarrior/app/modules/home/views/filter_drawer_home_page.dart';
-import 'package:taskwarrior/app/modules/home/views/tasks_builder.dart';
-import 'package:taskwarrior/app/modules/manageTaskServer/views/manage_task_server_view.dart';
-import 'package:taskwarrior/app/services/tag_filter.dart';
 import 'package:taskwarrior/app/utils/constants/palette.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
-import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
-import 'package:taskwarrior/app/utils/taskserver/taskserver.dart';
-import 'package:taskwarrior/app/utils/home_path/home_path.dart' as rc;
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
 
 class SettingsView extends GetView<SettingsController> {
-  const SettingsView({Key? key}) : super(key: key);
+  const SettingsView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,7 +201,7 @@ class SettingsView extends GetView<SettingsController> {
                           //Reset to default
                           TextButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
+                              backgroundColor: WidgetStateProperty.all<Color>(
                                 AppSettings.isDarkMode
                                     ? TaskWarriorColors
                                         .ksecondaryBackgroundColor
@@ -339,7 +327,7 @@ class SettingsView extends GetView<SettingsController> {
                           //Change directory
                           TextButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
+                              backgroundColor: WidgetStateProperty.all<Color>(
                                 AppSettings.isDarkMode
                                     ? TaskWarriorColors
                                         .ksecondaryBackgroundColor

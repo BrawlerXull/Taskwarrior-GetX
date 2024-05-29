@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:taskwarrior/app/models/storage/savefile.dart';
-import 'package:taskwarrior/app/modules/manageTaskServer/views/manage_task_server_view.dart';
 import 'package:taskwarrior/app/modules/profile/views/deleteprofiledialog.dart';
 import 'package:taskwarrior/app/modules/profile/views/manageprofile.dart';
 import 'package:taskwarrior/app/modules/profile/views/renameprofiledialog.dart';
@@ -270,7 +269,7 @@ class ProfilesColumn extends StatelessWidget {
               }
             },
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
+              backgroundColor: WidgetStateProperty.all<Color>(
                 AppSettings.isDarkMode
                     ? TaskWarriorColors.ksecondaryBackgroundColor
                     : TaskWarriorColors.kLightSecondaryBackgroundColor,

@@ -201,8 +201,6 @@ class AddTaskBottomSheet extends StatelessWidget {
                                   onSecondary: TaskWarriorColors.white,
                                   error: TaskWarriorColors.red,
                                   onError: TaskWarriorColors.black,
-                                  background: TaskWarriorColors.black,
-                                  onBackground: TaskWarriorColors.white,
                                   surface: TaskWarriorColors.black,
                                   onSurface: TaskWarriorColors.white,
                                 )
@@ -214,8 +212,6 @@ class AddTaskBottomSheet extends StatelessWidget {
                                   onSecondary: TaskWarriorColors.black,
                                   error: TaskWarriorColors.red,
                                   onError: TaskWarriorColors.white,
-                                  background: TaskWarriorColors.white,
-                                  onBackground: TaskWarriorColors.black,
                                   surface: TaskWarriorColors.white,
                                   onSurface: TaskWarriorColors.black,
                                 ),
@@ -225,7 +221,7 @@ class AddTaskBottomSheet extends StatelessWidget {
                     },
                     fieldHintText: "Month/Date/Year",
                     context: context,
-                    initialDate: homeController.due?.value ?? DateTime.now(),
+                    initialDate: homeController.due.value ?? DateTime.now(),
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2037, 12, 31),
                   );
@@ -244,8 +240,6 @@ class AddTaskBottomSheet extends StatelessWidget {
                                     onSecondary: TaskWarriorColors.white,
                                     error: TaskWarriorColors.red,
                                     onError: TaskWarriorColors.black,
-                                    background: TaskWarriorColors.black,
-                                    onBackground: TaskWarriorColors.white,
                                     surface: TaskWarriorColors.black,
                                     onSurface: TaskWarriorColors.white,
                                   )
@@ -257,8 +251,6 @@ class AddTaskBottomSheet extends StatelessWidget {
                                     onSecondary: TaskWarriorColors.black,
                                     error: TaskWarriorColors.red,
                                     onError: TaskWarriorColors.white,
-                                    background: TaskWarriorColors.white,
-                                    onBackground: TaskWarriorColors.black,
                                     surface: TaskWarriorColors.white,
                                     onSurface: TaskWarriorColors.black,
                                   ),
@@ -275,10 +267,7 @@ class AddTaskBottomSheet extends StatelessWidget {
                       initialTime: TimeOfDay.fromDateTime(
                           homeController.due.value ?? DateTime.now()),
                     );
-                    print("date" +
-                        date.toString() +
-                        " Time : " +
-                        time.toString());
+                    print("date$date Time : $time");
                     if (time != null) {
                       var dateTime = date.add(
                         Duration(
@@ -289,7 +278,7 @@ class AddTaskBottomSheet extends StatelessWidget {
                       print(dateTime);
                       homeController.due.value = dateTime.toUtc();
 
-                      print("due value " + homeController.due.toString());
+                      print("due value ${homeController.due}");
                       homeController.dueString.value =
                           DateFormat("dd-MM-yyyy HH:mm").format(dateTime);
                       print(homeController.dueString.value);

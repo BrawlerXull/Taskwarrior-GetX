@@ -176,7 +176,7 @@ class FilterDrawer extends StatelessWidget {
                       color: Color.fromARGB(0, 48, 46, 46),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
                       child: Text(
                         'Filter Tag By:',
                         // style: GoogleFonts.poppins(
@@ -228,7 +228,7 @@ class FilterDrawer extends StatelessWidget {
                       color: Color.fromARGB(0, 48, 46, 46),
                     ),
                      Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
                       child: Text(
                         'Sort By',
                         // style: GoogleFonts.poppins(

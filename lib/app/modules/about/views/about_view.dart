@@ -8,7 +8,6 @@ import 'package:taskwarrior/app/utils/gen/assets.gen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/about_controller.dart';
-import 'package:sizer/sizer.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';

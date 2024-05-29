@@ -4,36 +4,18 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
 import 'package:taskwarrior/app/utils/constants/utilites.dart';
 
-import '../controllers/settings_controller.dart';
-import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-import 'package:taskwarrior/app/models/filters.dart';
-import 'package:taskwarrior/app/modules/detailRoute/views/detail_route_view.dart';
 
-import 'package:taskwarrior/app/modules/home/views/filter_drawer_home_page.dart';
-import 'package:taskwarrior/app/modules/home/views/tasks_builder.dart';
-import 'package:taskwarrior/app/modules/manageTaskServer/views/manage_task_server_view.dart';
-import 'package:taskwarrior/app/services/tag_filter.dart';
-import 'package:taskwarrior/app/utils/constants/palette.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
-import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
-import 'package:taskwarrior/app/utils/taskserver/taskserver.dart';
-import 'package:taskwarrior/app/utils/home_path/home_path.dart' as rc;
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
 import 'package:path/path.dart' as path;
-import 'dart:io';
 
-import 'package:get/get.dart';
 import 'package:taskwarrior/app/modules/splash/controllers/splash_controller.dart';
 
 class SettingsController extends GetxController {

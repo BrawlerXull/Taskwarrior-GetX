@@ -119,8 +119,10 @@ class ReportsView extends GetView<ReportsController> {
               )
             : IndexedStack(
                 index: controller.selectedIndex.value,
-                children:  [
-                  BurnDownDaily(reportsController: controller,),
+                children: [
+                  BurnDownDaily(
+                    reportsController: controller,
+                  ),
                   // BurnDownWeekly(),
                   // BurnDownMonthly(),
                 ],
