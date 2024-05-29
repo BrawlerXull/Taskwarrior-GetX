@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -53,7 +54,7 @@ class SelectProfile extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 1.h,
+            height: Get.height * 0.01,
           ),
           Text(currentProfile,
               style: GoogleFonts.poppins(
@@ -66,10 +67,10 @@ class SelectProfile extends StatelessWidget {
       ),
       children: [
         SizedBox(
-          height: 1.h,
+          height: Get.height * 0.01,
         ),
         Padding(
-          padding: EdgeInsets.only(left: 4.w),
+          padding: EdgeInsets.only(left: Get.height * 0.04),
           child: Row(
             children: [
               Text(
@@ -87,7 +88,7 @@ class SelectProfile extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 1.h,
+          height: Get.height * 0.01,
         ),
         for (var entry in profilesMap.entries)
           SelectProfileListTile(
