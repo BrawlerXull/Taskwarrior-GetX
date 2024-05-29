@@ -263,17 +263,17 @@ class AddTaskBottomSheet extends StatelessWidget {
                                     onSurface: TaskWarriorColors.black,
                                   ),
                           ),
-                          child: MediaQuery(
+                          child: Obx(() => MediaQuery(
                               data: MediaQuery.of(context).copyWith(
                                 alwaysUse24HourFormat:
                                     homeController.change24hr.value,
                               ),
-                              child: child!),
+                              child: child!)),
                         );
                       },
                       context: context,
                       initialTime: TimeOfDay.fromDateTime(
-                          homeController.due?.value ?? DateTime.now()),
+                          homeController.due.value ?? DateTime.now()),
                     );
                     print("date" +
                         date.toString() +
@@ -287,7 +287,7 @@ class AddTaskBottomSheet extends StatelessWidget {
                         ),
                       );
                       print(dateTime);
-                      homeController.due?.value = dateTime.toUtc();
+                      homeController.due.value = dateTime.toUtc();
 
                       print("due value " + homeController.due.toString());
                       homeController.dueString.value =

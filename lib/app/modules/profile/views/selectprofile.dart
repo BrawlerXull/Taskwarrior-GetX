@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
@@ -127,7 +128,8 @@ class SelectProfileListTile extends StatelessWidget {
           onChanged: (_) {
             select();
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
                 content: Text(
                   'Switched to Profile ${alias ?? uuid}',
                   style: TextStyle(
@@ -139,7 +141,10 @@ class SelectProfileListTile extends StatelessWidget {
                 backgroundColor: AppSettings.isDarkMode
                     ? TaskWarriorColors.ksecondaryBackgroundColor
                     : TaskWarriorColors.kLightSecondaryBackgroundColor,
-                duration: const Duration(seconds: 2)));
+                duration: const Duration(seconds: 2),
+              ),
+            );
+            Get.find<HomeController>().refreshTaskWithNewProfile();
           },
           activeColor: AppSettings.isDarkMode
               ? TaskWarriorColors.white

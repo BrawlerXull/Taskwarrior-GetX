@@ -448,4 +448,14 @@ class HomeController extends GetxController {
     );
     return filters;
   }
+
+  // select profile
+  void refreshTaskWithNewProfile() {
+    storage = Storage(
+      Directory(
+        '${splashController.baseDirectory.value.path}/profiles/${splashController.currentProfile.value}',
+      ),
+    );
+    _refreshTasks();
+  }
 }
