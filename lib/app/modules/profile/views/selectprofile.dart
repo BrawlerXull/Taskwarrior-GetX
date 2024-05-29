@@ -7,7 +7,6 @@ import 'package:taskwarrior/app/utils/constants/taskwarrior_colors.dart';
 import 'package:taskwarrior/app/utils/constants/taskwarrior_fonts.dart';
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
 
-
 class SelectProfile extends StatelessWidget {
   const SelectProfile(
     this.currentProfile,
@@ -22,59 +21,28 @@ class SelectProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      key: const PageStorageKey<String>('task-list'),
-      backgroundColor: AppSettings.isDarkMode
-          ? TaskWarriorColors.ksecondaryBackgroundColor
-          : TaskWarriorColors.kLightSecondaryBackgroundColor,
-      iconColor: AppSettings.isDarkMode
-          ? TaskWarriorColors.white
-          : TaskWarriorColors.black,
-      collapsedIconColor: AppSettings.isDarkMode
-          ? TaskWarriorColors.white
-          : TaskWarriorColors.black,
-      collapsedTextColor: AppSettings.isDarkMode
-          ? TaskWarriorColors.ksecondaryTextColor
-          : TaskWarriorColors.kLightSecondaryTextColor,
-      textColor: AppSettings.isDarkMode
-          ? TaskWarriorColors.white
-          : TaskWarriorColors.black,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Current Profile:',
-            overflow: TextOverflow.fade,
-            style: GoogleFonts.poppins(
-              fontWeight: TaskWarriorFonts.bold,
-              fontSize: TaskWarriorFonts.fontSizeMedium,
-              color: AppSettings.isDarkMode
-                  ? TaskWarriorColors.white
-                  : TaskWarriorColors.black,
-            ),
-          ),
-          SizedBox(
-            height: Get.height * 0.01,
-          ),
-          Text(currentProfile,
-              style: GoogleFonts.poppins(
-                fontSize: TaskWarriorFonts.fontSizeSmall,
-                color: AppSettings.isDarkMode
-                    ? TaskWarriorColors.grey
-                    : TaskWarriorColors.lightGrey,
-              ))
-        ],
-      ),
-      children: [
-        SizedBox(
-          height: Get.height * 0.01,
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: Get.height * 0.04),
-          child: Row(
+    return Obx(() => ExpansionTile(
+          key: const PageStorageKey<String>('task-list'),
+          backgroundColor: AppSettings.isDarkMode
+              ? TaskWarriorColors.ksecondaryBackgroundColor
+              : TaskWarriorColors.kLightSecondaryBackgroundColor,
+          iconColor: AppSettings.isDarkMode
+              ? TaskWarriorColors.white
+              : TaskWarriorColors.black,
+          collapsedIconColor: AppSettings.isDarkMode
+              ? TaskWarriorColors.white
+              : TaskWarriorColors.black,
+          collapsedTextColor: AppSettings.isDarkMode
+              ? TaskWarriorColors.ksecondaryTextColor
+              : TaskWarriorColors.kLightSecondaryTextColor,
+          textColor: AppSettings.isDarkMode
+              ? TaskWarriorColors.white
+              : TaskWarriorColors.black,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'All Profiles:',
+                'Current Profile:',
                 overflow: TextOverflow.fade,
                 style: GoogleFonts.poppins(
                   fontWeight: TaskWarriorFonts.bold,
@@ -84,21 +52,52 @@ class SelectProfile extends StatelessWidget {
                       : TaskWarriorColors.black,
                 ),
               ),
+              SizedBox(
+                height: Get.height * 0.01,
+              ),
+              Text(currentProfile,
+                  style: GoogleFonts.poppins(
+                    fontSize: TaskWarriorFonts.fontSizeSmall,
+                    color: AppSettings.isDarkMode
+                        ? TaskWarriorColors.grey
+                        : TaskWarriorColors.lightGrey,
+                  ))
             ],
           ),
-        ),
-        SizedBox(
-          height: Get.height * 0.01,
-        ),
-        for (var entry in profilesMap.entries)
-          SelectProfileListTile(
-            currentProfile,
-            entry.key,
-            () => selectProfile(entry.key),
-            entry.value,
-          )
-      ],
-    );
+          children: [
+            SizedBox(
+              height: Get.height * 0.01,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: Get.height * 0.04),
+              child: Row(
+                children: [
+                  Text(
+                    'All Profiles:',
+                    overflow: TextOverflow.fade,
+                    style: GoogleFonts.poppins(
+                      fontWeight: TaskWarriorFonts.bold,
+                      fontSize: TaskWarriorFonts.fontSizeMedium,
+                      color: AppSettings.isDarkMode
+                          ? TaskWarriorColors.white
+                          : TaskWarriorColors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: Get.height * 0.01,
+            ),
+            for (var entry in profilesMap.entries)
+              SelectProfileListTile(
+                currentProfile,
+                entry.key,
+                () => selectProfile(entry.key),
+                entry.value,
+              )
+          ],
+        ));
   }
 }
 
