@@ -133,7 +133,7 @@ class HomeView extends GetView<HomeController> {
             // drawer: Obx(
             //   () => NavDrawer(controller: controller, notifyParent: refresh),
             // ),
-            drawer: Obx(() => NavDrawer(homeController: controller)),
+            drawer: NavDrawer(homeController: controller),
             body: DoubleBackToCloseApp(
               snackBar: const SnackBar(content: Text('Tap back again to exit')),
               // ignore: avoid_unnecessary_containers

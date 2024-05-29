@@ -142,45 +142,48 @@ class SettingsView extends GetView<SettingsController> {
                       fontSize: TaskWarriorFonts.fontSizeSmall,
                     ),
                   ),
-                  trailing: Switch(
-                    value: controller.isSyncOnTaskCreateActivel.value,
-                    onChanged: (bool value) async {
-                      controller.isSyncOnTaskCreateActivel.value = value;
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      await prefs.setBool('sync-OnTaskCreate', value);
-                    },
+                  trailing: Obx(
+                    () => Switch(
+                      value: controller.isSyncOnTaskCreateActivel.value,
+                      onChanged: (bool value) async {
+                        controller.isSyncOnTaskCreateActivel.value = value;
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        await prefs.setBool('sync-OnTaskCreate', value);
+                      },
+                    ),
                   ),
                 ),
                 const Divider(),
                 ListTile(
-                  title: Text(
-                    'Highlight the task',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      fontSize: TaskWarriorFonts.fontSizeMedium,
-                      color: AppSettings.isDarkMode
-                          ? TaskWarriorColors.white
-                          : TaskWarriorColors.black,
+                    title: Text(
+                      'Highlight the task',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        fontSize: TaskWarriorFonts.fontSizeMedium,
+                        color: AppSettings.isDarkMode
+                            ? TaskWarriorColors.white
+                            : TaskWarriorColors.black,
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    'Make the border of task if only one day left',
-                    style: GoogleFonts.poppins(
-                      color: TaskWarriorColors.grey,
-                      fontSize: TaskWarriorFonts.fontSizeSmall,
+                    subtitle: Text(
+                      'Make the border of task if only one day left',
+                      style: GoogleFonts.poppins(
+                        color: TaskWarriorColors.grey,
+                        fontSize: TaskWarriorFonts.fontSizeSmall,
+                      ),
                     ),
-                  ),
-                  trailing: Switch(
-                    value: controller.delaytask.value,
-                    onChanged: (bool value) async {
-                      controller.delaytask.value = value;
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      await prefs.setBool('delaytask', value);
-                    },
-                  ),
-                ),
+                    trailing: Obx(
+                      () => Switch(
+                        value: controller.delaytask.value,
+                        onChanged: (bool value) async {
+                          controller.delaytask.value = value;
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setBool('delaytask', value);
+                        },
+                      ),
+                    )),
                 const Divider(),
                 ListTile(
                   title: Text(
@@ -363,34 +366,35 @@ class SettingsView extends GetView<SettingsController> {
                 ),
                 const Divider(),
                 ListTile(
-                  title: Text(
-                    'Enable 24HR formte',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      fontSize: TaskWarriorFonts.fontSizeMedium,
-                      color: AppSettings.isDarkMode
-                          ? TaskWarriorColors.white
-                          : TaskWarriorColors.black,
+                    title: Text(
+                      'Enable 24HR formte',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        fontSize: TaskWarriorFonts.fontSizeMedium,
+                        color: AppSettings.isDarkMode
+                            ? TaskWarriorColors.white
+                            : TaskWarriorColors.black,
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    'Switch to Right to convert in 24hr formate',
-                    style: GoogleFonts.poppins(
-                      color: TaskWarriorColors.grey,
-                      fontSize: TaskWarriorFonts.fontSizeSmall,
+                    subtitle: Text(
+                      'Switch to Right to convert in 24hr formate',
+                      style: GoogleFonts.poppins(
+                        color: TaskWarriorColors.grey,
+                        fontSize: TaskWarriorFonts.fontSizeSmall,
+                      ),
                     ),
-                  ),
-                  trailing: Switch(
-                    value: controller.change24hr.value,
-                    onChanged: (bool value) async {
-                      controller.change24hr.value = value;
+                    trailing: Obx(
+                      () => Switch(
+                        value: controller.change24hr.value,
+                        onChanged: (bool value) async {
+                          controller.change24hr.value = value;
 
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      await prefs.setBool('24hourformate', value);
-                    },
-                  ),
-                ),
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setBool('24hourformate', value);
+                        },
+                      ),
+                    )),
               ],
             ),
     );

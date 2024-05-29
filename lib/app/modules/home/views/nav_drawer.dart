@@ -77,7 +77,7 @@ class NavDrawer extends StatelessWidget {
               color: AppSettings.isDarkMode
                   ? TaskWarriorColors.kprimaryBackgroundColor
                   : TaskWarriorColors.kLightPrimaryBackgroundColor,
-              height: 3.h,
+              height: Get.height * 0.03,
             ),
             buildMenuItem(
               icon: Icons.person_rounded,

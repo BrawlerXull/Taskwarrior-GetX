@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl/intl.dart';
+import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
 
 import 'package:taskwarrior/app/utils/constants/constants.dart';
 import 'package:taskwarrior/app/utils/theme/app_settings.dart';
@@ -17,6 +18,7 @@ class DateTimeWidget extends StatelessWidget {
   });
 
   final String name;
+
   final dynamic value;
   final void Function(dynamic) callback;
 
@@ -94,7 +96,8 @@ class DateTimeWidget extends StatelessWidget {
               // Check if the selected time is in the past
               if (dateTime.isBefore(DateTime.now())) {
                 // Show a message that past times can't be set
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
                     content: Text(
                       "Can't set times in the past",
                       style: TextStyle(
@@ -106,7 +109,9 @@ class DateTimeWidget extends StatelessWidget {
                     backgroundColor: AppSettings.isDarkMode
                         ? TaskWarriorColors.ksecondaryBackgroundColor
                         : TaskWarriorColors.kLightSecondaryBackgroundColor,
-                    duration: const Duration(seconds: 2)));
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
               } else {
                 // If the time is not in the past, proceed as usual
                 return callback(dateTime.toUtc());
