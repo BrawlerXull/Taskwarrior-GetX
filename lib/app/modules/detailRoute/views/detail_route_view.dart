@@ -9,6 +9,7 @@ import 'package:taskwarrior/app/modules/detailRoute/views/priority_widget.dart';
 import 'package:taskwarrior/app/modules/detailRoute/views/status_widget.dart';
 import 'package:taskwarrior/app/modules/detailRoute/views/tags_widget.dart';
 import 'package:taskwarrior/app/modules/home/views/home_view.dart';
+import 'package:taskwarrior/app/routes/app_pages.dart';
 import 'package:taskwarrior/app/utils/constants/constants.dart';
 import 'package:taskwarrior/app/utils/gen/fonts.gen.dart';
 import 'package:taskwarrior/app/utils/taskfunctions/urgency.dart';
@@ -22,7 +23,9 @@ class DetailRouteView extends GetView<DetailRouteController> {
     return WillPopScope(
       onWillPop: () async {
         if (!controller.onEdit.value) {
-          Get.offAll(() => const HomeView());
+          // Get.offAll(() => const HomeView());
+          Get.back();
+          // Get.toNamed(Routes.HOME);
           return false;
         }
 
@@ -35,13 +38,17 @@ class DetailRouteView extends GetView<DetailRouteController> {
                 TextButton(
                   onPressed: () {
                     controller.saveChanges();
-                    Get.offAll(() => const HomeView());
+                    // Get.offAll(() => const HomeView());
+
+                    Get.back();
                   },
                   child: const Text('Yes'),
                 ),
                 TextButton(
                   onPressed: () {
-                    Get.offAll(() => const HomeView());
+                    // Get.offAll(() => const HomeView());
+
+                    Get.back();
                   },
                   child: const Text('No'),
                 ),
@@ -58,98 +65,83 @@ class DetailRouteView extends GetView<DetailRouteController> {
         return save == true;
       },
       child: Scaffold(
-        backgroundColor: AppSettings.isDarkMode
-            ? TaskWarriorColors.kprimaryBackgroundColor
-            : TaskWarriorColors.kLightPrimaryBackgroundColor,
-        appBar: AppBar(
-          leading: BackButton(color: TaskWarriorColors.white),
-          backgroundColor: Palette.kToDark,
-          title: Obx(() => Text(
+          backgroundColor: AppSettings.isDarkMode
+              ? TaskWarriorColors.kprimaryBackgroundColor
+              : TaskWarriorColors.kLightPrimaryBackgroundColor,
+          appBar: AppBar(
+              leading: BackButton(color: TaskWarriorColors.white),
+              backgroundColor: Palette.kToDark,
+              title: Text(
                 'id: ${(controller.modify.id == 0) ? '-' : controller.modify.id}',
                 style: TextStyle(
                   color: TaskWarriorColors.white,
                 ),
               )),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-            children: [
-              for (var entry in {
-                'description': controller.modify.draft.description,
-                'status': controller.modify.draft.status,
-                'entry': controller.modify.draft.entry,
-                'modified': controller.modify.draft.modified,
-                'start': controller.modify.draft.start,
-                'end': controller.modify.draft.end,
-                'due': controller.modify.draft.due,
-                'wait': controller.modify.draft.wait,
-                'until': controller.modify.draft.until,
-                'priority': controller.modify.draft.priority,
-                'project': controller.modify.draft.project,
-                'tags': controller.modify.draft.tags,
-                'urgency': urgency(controller.modify.draft),
-              }.entries)
-                AttributeWidget(
-                  name: entry.key,
-                  value: entry.value,
-                  callback: (newValue) =>
-                      controller.setAttribute(entry.key, newValue),
-                ),
-            ],
+          body: Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: ListView(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+              children: [
+                for (var entry in {
+                  'description': controller.modify.draft.description,
+                  'status': controller.modify.draft.status,
+                  'entry': controller.modify.draft.entry,
+                  'modified': controller.modify.draft.modified,
+                  'start': controller.modify.draft.start,
+                  'end': controller.modify.draft.end,
+                  'due': controller.modify.draft.due,
+                  'wait': controller.modify.draft.wait,
+                  'until': controller.modify.draft.until,
+                  'priority': controller.modify.draft.priority,
+                  'project': controller.modify.draft.project,
+                  'tags': controller.modify.draft.tags,
+                  'urgency': urgency(controller.modify.draft),
+                }.entries)
+                  AttributeWidget(
+                    name: entry.key,
+                    value: entry.value,
+                    callback: (newValue) =>
+                        controller.setAttribute(entry.key, newValue),
+                  ),
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: Obx(() => controller.modify.changes.isEmpty
-            ? const SizedBox.shrink()
-            : FloatingActionButton(
-                backgroundColor: AppSettings.isDarkMode
-                    ? TaskWarriorColors.black
-                    : TaskWarriorColors.white,
-                foregroundColor: AppSettings.isDarkMode
-                    ? TaskWarriorColors.white
-                    : TaskWarriorColors.black,
-                splashColor: AppSettings.isDarkMode
-                    ? TaskWarriorColors.black
-                    : TaskWarriorColors.white,
-                heroTag: "btn1",
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        scrollable: true,
-                        title: Text(
-                          'Review changes:',
-                          style: TextStyle(
-                            color: AppSettings.isDarkMode
-                                ? TaskWarriorColors.white
-                                : TaskWarriorColors.black,
-                          ),
-                        ),
-                        content: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Text(
-                            controller.modify.changes.entries
-                                .map((entry) => '${entry.key}:\n'
-                                    '  old: ${entry.value['old']}\n'
-                                    '  new: ${entry.value['new']}')
-                                .toList()
-                                .join('\n'),
+          floatingActionButton: controller.modify.changes.isEmpty
+              ? const SizedBox.shrink()
+              : FloatingActionButton(
+                  backgroundColor: AppSettings.isDarkMode
+                      ? TaskWarriorColors.black
+                      : TaskWarriorColors.white,
+                  foregroundColor: AppSettings.isDarkMode
+                      ? TaskWarriorColors.white
+                      : TaskWarriorColors.black,
+                  splashColor: AppSettings.isDarkMode
+                      ? TaskWarriorColors.black
+                      : TaskWarriorColors.white,
+                  heroTag: "btn1",
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          scrollable: true,
+                          title: Text(
+                            'Review changes:',
                             style: TextStyle(
                               color: AppSettings.isDarkMode
                                   ? TaskWarriorColors.white
                                   : TaskWarriorColors.black,
                             ),
                           ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Get.back();
-                            },
+                          content: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
                             child: Text(
-                              'Cancel',
+                              controller.modify.changes.entries
+                                  .map((entry) => '${entry.key}:\n'
+                                      '  old: ${entry.value['old']}\n'
+                                      '  new: ${entry.value['new']}')
+                                  .toList()
+                                  .join('\n'),
                               style: TextStyle(
                                 color: AppSettings.isDarkMode
                                     ? TaskWarriorColors.white
@@ -157,27 +149,40 @@ class DetailRouteView extends GetView<DetailRouteController> {
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              controller.saveChanges();
-                            },
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(
-                                color: AppSettings.isDarkMode
-                                    ? TaskWarriorColors.black
-                                    : TaskWarriorColors.black,
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  color: AppSettings.isDarkMode
+                                      ? TaskWarriorColors.white
+                                      : TaskWarriorColors.black,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: const Icon(Icons.save),
-              )),
-      ),
+                            ElevatedButton(
+                              onPressed: () {
+                                controller.saveChanges();
+                              },
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(
+                                  color: AppSettings.isDarkMode
+                                      ? TaskWarriorColors.black
+                                      : TaskWarriorColors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: const Icon(Icons.save),
+                )),
     );
   }
 }

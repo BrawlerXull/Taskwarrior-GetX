@@ -200,6 +200,7 @@ class TasksBuilder extends StatelessWidget {
                               Get.toNamed(Routes.DETAIL_ROUTE,
                                   arguments: ["uuid", task.uuid]);
                             },
+                            child: Text(task.entry.toString()),
                             // onTap: () => Navigator.push(
                             //   context,
                             //   MaterialPageRoute(
@@ -226,6 +227,7 @@ class TasksBuilder extends StatelessWidget {
                             Get.toNamed(Routes.DETAIL_ROUTE,
                                 arguments: ["uuid", task.uuid]);
                           },
+                          child: Text(task.entry.toString()),
                           // child: TaskListItem(
                           //   task,
                           //   pendingFilter: pendingFilter,
