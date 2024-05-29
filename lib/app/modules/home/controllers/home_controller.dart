@@ -401,10 +401,10 @@ class HomeController extends GetxController {
   RxBool change24hr = false.obs;
 
   // dialogue box
-  
+
   final formKey = GlobalKey<FormState>();
   final namecontroller = TextEditingController();
-  Rx<DateTime>? due;
+  var due = Rxn<DateTime>();
   RxString dueString = ''.obs;
   RxString priority = 'M'.obs;
   final tagcontroller = TextEditingController();

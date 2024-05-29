@@ -99,6 +99,7 @@ class TasksBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(taskData);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
       floatingActionButton: FloatingActionButton(
@@ -205,11 +206,11 @@ class TasksBuilder extends StatelessWidget {
                             //     builder: (context) => DetailRouteView(task.uuid),
                             //   ),
                             // ),
-                            child: TaskListItem(
-                              task,
-                              pendingFilter: pendingFilter,
-                              // darkmode: AppSettings.isDarkMode,
-                            ),
+                            // child: TaskListItem(
+                            //   task,
+                            //   pendingFilter: pendingFilter,
+                            //   // darkmode: AppSettings.isDarkMode,
+                            // ),
                           ),
                         ),
                       )
@@ -225,11 +226,11 @@ class TasksBuilder extends StatelessWidget {
                             Get.toNamed(Routes.DETAIL_ROUTE,
                                 arguments: ["uuid", task.uuid]);
                           },
-                          child: TaskListItem(
-                            task,
-                            pendingFilter: pendingFilter,
-                            darkmode: AppSettings.isDarkMode,
-                          ),
+                          // child: TaskListItem(
+                          //   task,
+                          //   pendingFilter: pendingFilter,
+                          //   darkmode: AppSettings.isDarkMode,
+                          // ),
                         ),
                       );
               },

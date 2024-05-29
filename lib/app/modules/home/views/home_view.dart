@@ -107,8 +107,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 Builder(
-                  builder: (context) => Obx(
-                    () => IconButton(
+                  builder: (context) => IconButton(
                       icon: Icon(Icons.refresh, color: TaskWarriorColors.white),
                       onPressed: () {
                         if (server != null || credentials != null) {
@@ -143,7 +142,7 @@ class HomeView extends GetView<HomeController> {
                         }
                       },
                     ),
-                  ),
+
                 ),
                 Builder(
                   builder: (context) => IconButton(

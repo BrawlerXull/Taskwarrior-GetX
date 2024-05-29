@@ -35,9 +35,8 @@ class WidgetController extends GetxController {
       var currentProfile = Get.find<SplashController>().currentProfile.value;
 
       baseDirectory = Get.find<SplashController>().baseDirectory();
-      storage =
+       storage =
           Storage(Directory('${baseDirectory!.path}/profiles/$currentProfile'));
-
       allData.assignAll(storage.data.allData());
       sendAndUpdate();
     }

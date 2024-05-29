@@ -44,7 +44,7 @@ class AddTaskBottomSheet extends StatelessWidget {
               ),
             ),
             content: Form(
-              // key: formKey,
+              key: homeController.formKey,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
@@ -162,7 +162,8 @@ class AddTaskBottomSheet extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              child: TextFormField(
+                child: Obx(
+              () => TextFormField(
                 style: homeController.inThePast.value
                     ? TextStyle(color: TaskWarriorColors.red)
                     : TextStyle(
@@ -271,9 +272,13 @@ class AddTaskBottomSheet extends StatelessWidget {
                         );
                       },
                       context: context,
-                      initialTime:
-                          TimeOfDay.fromDateTime( homeController.due?.value ?? DateTime.now()),
+                      initialTime: TimeOfDay.fromDateTime(
+                          homeController.due?.value ?? DateTime.now()),
                     );
+                    print("date" +
+                        date.toString() +
+                        " Time : " +
+                        time.toString());
                     if (time != null) {
                       var dateTime = date.add(
                         Duration(
@@ -281,14 +286,17 @@ class AddTaskBottomSheet extends StatelessWidget {
                           minutes: time.minute,
                         ),
                       );
+                      print(dateTime);
                       homeController.due?.value = dateTime.toUtc();
+
+                      print("due value " + homeController.due.toString());
                       homeController.dueString.value =
                           DateFormat("dd-MM-yyyy HH:mm").format(dateTime);
+                      print(homeController.dueString.value);
                       if (dateTime.isBefore(DateTime.now())) {
                         //Try changing the color. in the settings and Due display.
 
                         homeController.inThePast.value = true;
-
 
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(
@@ -305,9 +313,7 @@ class AddTaskBottomSheet extends StatelessWidget {
                                     .kLightSecondaryBackgroundColor,
                             duration: const Duration(seconds: 2)));
                       } else {
-
-                           homeController.inThePast.value = false;
-
+                        homeController.inThePast.value = false;
                       }
 
                       // setState(() {});
@@ -315,7 +321,7 @@ class AddTaskBottomSheet extends StatelessWidget {
                   }
                 },
               ),
-            ),
+            )),
           ),
         ],
       );
@@ -340,7 +346,7 @@ class AddTaskBottomSheet extends StatelessWidget {
                 dropdownColor: AppSettings.isDarkMode
                     ? TaskWarriorColors.kdialogBackGroundColor
                     : TaskWarriorColors.kLightDialogBackGroundColor,
-                value:  homeController.priority.value,
+                value: homeController.priority.value,
                 elevation: 16,
                 style: GoogleFonts.poppins(
                   color: AppSettings.isDarkMode
@@ -394,10 +400,11 @@ class AddTaskBottomSheet extends StatelessWidget {
         ),
       ),
       onPressed: () async {
+        print(homeController.formKey.currentState);
         if (homeController.formKey.currentState!.validate()) {
           try {
             var task = taskParser(homeController.namecontroller.text)
-                .rebuild((b) => b..due = homeController.due!.value)
+                .rebuild((b) => b..due = homeController.due.value)
                 .rebuild((p) => p..priority = homeController.priority.value);
             if (homeController.tagcontroller.text != "") {
               homeController.tags.add(homeController.tagcontroller.text.trim());
@@ -406,16 +413,19 @@ class AddTaskBottomSheet extends StatelessWidget {
               task = task.rebuild((t) => t..tags.replace(homeController.tags));
             }
             Get.find<HomeController>().mergeTask(task);
+            print(task);
 
             // StorageWidget.of(context).mergeTask(task);
             homeController.namecontroller.text = '';
-            homeController.due = null;
+            homeController.due.value = null;
             homeController.priority.value = 'M';
             homeController.tagcontroller.text = '';
             homeController.tags.value = [];
             homeController.update();
             Navigator.of(context).pop();
             widgetController.fetchAllData();
+
+            homeController.update();
 
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
