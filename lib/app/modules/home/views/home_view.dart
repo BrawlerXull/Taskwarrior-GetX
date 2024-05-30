@@ -211,6 +211,7 @@ class HomeView extends GetView<HomeController> {
                             child: Obx(
                               () => TasksBuilder(
                                   // darkmode: AppSettings.isDarkMode,
+                                  useDelayTask: controller.useDelayTask.value,
                                   taskData: taskData,
                                   pendingFilter: pendingFilter.value,
                                   waitingFilter: waitingFilter.value,

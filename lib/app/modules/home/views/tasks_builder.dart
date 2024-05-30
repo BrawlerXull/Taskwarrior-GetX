@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:taskwarrior/app/models/models.dart';
 import 'package:taskwarrior/app/modules/home/controllers/home_controller.dart';
+import 'package:taskwarrior/app/modules/home/views/tas_list_item.dart';
 import 'package:taskwarrior/app/routes/app_pages.dart';
 import 'package:taskwarrior/app/services/notification_services.dart';
 import 'package:taskwarrior/app/utils/constants/palette.dart';
@@ -20,13 +21,16 @@ class TasksBuilder extends StatelessWidget {
     required this.taskData,
     required this.pendingFilter,
     required this.waitingFilter,
+    required this.useDelayTask,
     required this.searchVisible,
+
   });
 
   final List<Task> taskData;
   final bool pendingFilter;
   final bool waitingFilter;
   final bool searchVisible;
+  final bool useDelayTask;
 
   void setStatus(BuildContext context, String newValue, String id) {
     var storageWidget = Get.find<HomeController>();
@@ -100,6 +104,7 @@ class TasksBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(taskData);
+    var storageWidget = Get.find<HomeController>();
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
       floatingActionButton: FloatingActionButton(
@@ -200,18 +205,23 @@ class TasksBuilder extends StatelessWidget {
                               Get.toNamed(Routes.DETAIL_ROUTE,
                                   arguments: ["uuid", task.uuid]);
                             },
-                            child: Text(task.entry.toString()),
+                            // child: Text(task.entry.toString()),
                             // onTap: () => Navigator.push(
                             //   context,
                             //   MaterialPageRoute(
                             //     builder: (context) => DetailRouteView(task.uuid),
                             //   ),
                             // ),
-                            // child: TaskListItem(
-                            //   task,
-                            //   pendingFilter: pendingFilter,
-                            //   // darkmode: AppSettings.isDarkMode,
-                            // ),
+                            child: TaskListItem(
+                              task,
+                              pendingFilter: pendingFilter,
+                              darkmode: AppSettings.isDarkMode,
+                              useDelayTask: useDelayTask, modify: Modify(
+      getTask: storageWidget.getTask,
+      mergeTask: storageWidget.mergeTask,
+      uuid: task.uuid,
+    ),
+                            ),
                           ),
                         ),
                       )

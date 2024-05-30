@@ -49,6 +49,7 @@ class HomeController extends GetxController {
     );
     serverCertExists = RxBool(storage.guiPemFiles.serverCertExists());
     _profileSet();
+    loadDelayTask();
   }
 
   void _profileSet() {
@@ -454,5 +455,12 @@ class HomeController extends GetxController {
       ),
     );
     _refreshTasks();
+  }
+
+  RxBool useDelayTask = false.obs;
+
+  Future<void> loadDelayTask() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    useDelayTask.value = prefs.getBool('delaytask') ?? false;
   }
 }
